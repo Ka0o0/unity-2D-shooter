@@ -13,7 +13,10 @@
           </e>
         </e>
         <e p="Scripts" t="Include">
+          <e p="Bullet.cs" t="Include" />
           <e p="GameManager.cs" t="Include" />
+          <e p="SoldierManager.cs" t="Include" />
+          <e p="Team.cs" t="Include" />
         </e>
       </e>
       <e p="Library" t="ExcludeRecursive" />

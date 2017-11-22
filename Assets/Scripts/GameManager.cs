@@ -5,11 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
-    public GameObject PlayerPrefab;
-
-
-    private void Start()
-    {
-        Instantiate(PlayerPrefab);
-    }
+    public List<GameObject> Soldiers;
+    
+    
 }
