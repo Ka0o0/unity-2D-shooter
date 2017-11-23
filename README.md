@@ -1,6 +1,11 @@
 # Round-Based 2D Shooting Game
 
-The goal of this project is to develop a round based 2D multiplayer network shooting game.
+The goal of this project is to develop a round based 2D multiplayer network shooting game with Unity.
+
+## Team Members
+
+- [Christoph Muck](https://github.com/D4Muck)
+- [Kai Takac](https://github.com/Ka0o0)
 
 ## Gameplay
 
@@ -34,6 +39,23 @@ Some obstacles can also have healthpoints and they are considered destroyed once
 ## Graphics
 
 As mentioned in the introduction, this game will be in 2D and we'll mostly use publicly availble bit assets.
+
+## Control
+
+A player should be able to pinch-zoom and drag the main camera around the gamefield.
+To select a soldier during his move, a player just has to click on the game object and a menu is shown, containing the following options:
+
+- Move
+- Shoot
+
+Once one of the options is selected, the menu is transitioned away and the player can click on the target location for the given action.
+Should the player click on the same soldier again the movement is aborted.
+
+If the user has not selected a soldier or is not in one of the action states, a button is shown which will show the main-menu once it is clicked on.
+
+The main menu will a player to either give up or end the round.
+It should not be possible to reset round.
+Also we have to consider cases where our application is closed during a round.
 
 ## Scope
 
