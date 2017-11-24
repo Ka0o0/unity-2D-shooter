@@ -1,28 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Utility.Tuple;
 
 namespace Game
 {
-    public class Game : MonoBehaviour
+    public class GameMachine : MonoBehaviour
     {
         private GameState _state = GameState.Idle;
-        private readonly Dictionary<Tuple<GameState, GameEvent.GameEventType>, Func<GameEvent, GameState>> _stateMachineTransitionMap = new Dictionary<Tuple<GameState, GameEvent.GameEventType>, Func<GameEvent, GameState>>();
 
-        public Game()
+        private readonly Dictionary<Tuple<GameState, GameEventType>, Func<GameEvent, GameState>>
+            _stateMachineTransitionMap = new Dictionary<Tuple<GameState, GameEventType>, Func<GameEvent, GameState>>();
+
+        public GameMachine()
         {
-            _stateMachineTransitionMap.Add(new Tuple<GameState, GameEvent.GameEventType>(), );
+            var SoldierMover = new SoldierMover();
+            _stateMachineTransitionMap.Add(
+                new Tuple<GameState, GameEventType>(GameState.Idle, GameEventType.SoldierSelected),
+                SoldierMover.SelectSoldier);
+            _stateMachineTransitionMap.Add(
+                new Tuple<GameState, GameEventType>(GameState.SoldierSelected, GameEventType.EmptyFieldSelected),
+                SoldierMover.MoveSoldier);
         }
-        
+
         public void HandleEvent(GameEvent gameEvent)
         {
-            var magic2 = new Tuple<GameState, GameEvent.GameEventType>(_state, gameEvent.Type);
+            var magic2 = new Tuple<GameState, GameEventType>(_state, gameEvent.Type);
             if (_stateMachineTransitionMap.ContainsKey(magic2))
             {
-                var newState = _stateMachineTransitionMap[magic2](gameEvent);
-                if (newState != GameState.Invalid)
+                var oldState = _state;
+                _state = _stateMachineTransitionMap[magic2](gameEvent);
+                if (oldState != _state)
                 {
-                    _state = newState;
+                    print("State changed to " + _state.ToString());
                 }
             }
         }

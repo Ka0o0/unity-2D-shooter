@@ -10,11 +10,25 @@ public class Soldier : MonoBehaviour
     public GameObject BulletPrefab;
     public String Name;
 
+    private float CenterOffset = (float) 0.5;
+
+    public bool CanMoveToPosition(Vector2 position)
+    {
+        // TODO: Implement me :)
+        return true;
+    }
+
+    public void MoveToPosition(Vector2 position)
+    {
+        transform.position = new Vector3((float) Math.Floor(position.x) + CenterOffset, (float) Math.Floor(position.y) + CenterOffset, 0);
+    }
+    
+    // MARK: Private
+
     private Boolean IsDead
     {
         get { return HealthPoints <= 0; }
     }
-
 
     private void Start()
     {

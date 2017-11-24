@@ -18,12 +18,22 @@
           <e p="Game" t="Include">
             <e p="Game.cs" t="Include" />
             <e p="GameEvent.cs" t="Include" />
+            <e p="GameEventType.cs" t="Include" />
             <e p="GameState.cs" t="Include" />
+            <e p="SoldierMover.cs" t="Include" />
           </e>
           <e p="GameManager.cs" t="Include" />
           <e p="PinchZoom.cs" t="Include" />
           <e p="Soldier.cs" t="Include" />
           <e p="Team.cs" t="Include" />
+          <e p="Utility" t="Include">
+            <e p="Tuple" t="Include">
+              <e p="Tuple1.cs" t="Include" />
+              <e p="Tuple2.cs" t="Include" />
+              <e p="Tuple3.cs" t="Include" />
+              <e p="Tuple4.cs" t="Include" />
+            </e>
+          </e>
         </e>
       </e>
       <e p="Library" t="ExcludeRecursive" />

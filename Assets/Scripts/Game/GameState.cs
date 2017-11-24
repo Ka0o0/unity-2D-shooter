@@ -2,6 +2,6 @@
 {
     public enum GameState
     {
-        Invalid, Idle, SoldierSelected
+        Initialization, Idle, SoldierSelected, SoldierAttack, SoldierMovement
     }
 }

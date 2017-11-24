@@ -1,19 +1,31 @@
-﻿namespace Game
+﻿using NUnit.Framework.Constraints;
+using UnityEngine;
+
+namespace Game
 {
     public class GameEvent
     {
-        public enum GameEventType
-        {
-            Test
-        }
-
         public GameEventType Type;
         public object Payload;
 
-        public GameEvent(GameEventType type, object payload)
+        protected GameEvent(GameEventType type, object payload)
         {
             Type = type;
             Payload = payload;
+        }
+    }
+
+    public class SoldierSelectedGameEvent: GameEvent
+    {
+        public SoldierSelectedGameEvent(Soldier payload) : base(GameEventType.SoldierSelected, payload)
+        {
+        }
+    }
+    
+    public class EmptyFieldSelectedGameEvent: GameEvent
+    {
+        public EmptyFieldSelectedGameEvent(Vector2 payload) : base(GameEventType.EmptyFieldSelected, payload)
+        {
         }
     }
 }
