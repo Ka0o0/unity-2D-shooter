@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoldierManager : MonoBehaviour
+public class Soldier : MonoBehaviour
 {
     public Team Team;
     public double HealthPoints = 100;
     public GameObject BulletPrefab;
+    public String Name;
 
     private Boolean IsDead
     {
@@ -19,7 +20,7 @@ public class SoldierManager : MonoBehaviour
     {
         var bullet = Instantiate(BulletPrefab);
         bullet.transform.position = transform.position;
-        bullet.transform.Rotate(0, 0, 90);
+        bullet.transform.Rotate(0, 0, 135);
         bullet.GetComponent<Bullet>().StartMove();
     }
 

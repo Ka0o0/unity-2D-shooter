@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212806858717561898}
   - component: {fileID: 61518182509936532}
   - component: {fileID: 50274415034076240}
+  - component: {fileID: 114568693118081044}
   m_Layer: 8
   m_Name: RifleBullet
   m_TagString: Bullet
@@ -49,14 +50,14 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1143126175694020}
-  m_BodyType: 2
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -87,6 +88,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 3.57}
   m_EdgeRadius: 0
+--- !u!114 &114568693118081044
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1143126175694020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94183f54c35a4c799527bf870d275a36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Damage: 20
+  Speed: 300
 --- !u!212 &212806858717561898
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -118,8 +132,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 603189365
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 888c24d6e8dfe413b92b8ef8cb4962f5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

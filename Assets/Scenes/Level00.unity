@@ -121,9 +121,9 @@ GameObject:
   m_Component:
   - component: {fileID: 105641183}
   - component: {fileID: 105641184}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: BoundingBoxLeft
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -150,7 +150,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -175,9 +175,9 @@ GameObject:
   m_Component:
   - component: {fileID: 404116404}
   - component: {fileID: 404116405}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: BoundingBoxRight
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -204,7 +204,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -229,9 +229,9 @@ GameObject:
   m_Component:
   - component: {fileID: 930788477}
   - component: {fileID: 930788478}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: BoundingBoxBottom
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -258,7 +258,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -328,6 +328,11 @@ Prefab:
       value: 
       objectReference: {fileID: 1143126175694020, guid: 9b079d254b58f4c8ba7461c25544ba48,
         type: 2}
+    - target: {fileID: 114279872267145782, guid: ade7e2330fafe45b08187563d2d3bd86,
+        type: 2}
+      propertyPath: Name
+      value: Bob
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ade7e2330fafe45b08187563d2d3bd86, type: 2}
   m_IsPrefabParent: 0
@@ -342,7 +347,8 @@ GameObject:
   - component: {fileID: 1094911852}
   - component: {fileID: 1094911851}
   - component: {fileID: 1094911850}
-  m_Layer: 0
+  - component: {fileID: 1094911854}
+  m_Layer: 31
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -411,6 +417,19 @@ Transform:
   m_Father: {fileID: 1588630047}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1094911854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1094911849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a141664a2c394c899db195c02208f371, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PerspectiveZoomSpeed: 0.5
+  OrthoZoomSpeed: 0.05
 --- !u!1 &1588630045
 GameObject:
   m_ObjectHideFlags: 0
@@ -421,7 +440,8 @@ GameObject:
   - component: {fileID: 1588630047}
   - component: {fileID: 1588630046}
   - component: {fileID: 1588630048}
-  m_Layer: 0
+  - component: {fileID: 1588630049}
+  m_Layer: 31
   m_Name: Battlefield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -459,17 +479,17 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1989214657
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: c759b446426c749df9c0c558ea02b208, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 10.1, y: 10.1}
+  m_Size: {x: 10, y: 10}
   m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
+  m_SpriteTileMode: 1
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
 --- !u!4 &1588630047
@@ -479,7 +499,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1588630045}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.05, y: 5.05, z: 0}
+  m_LocalPosition: {x: 5, y: 5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1706820405}
@@ -502,6 +522,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Soldiers: []
+--- !u!114 &1588630049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1588630045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9385ff698d57d4614a146d447f80a3a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1706820404
 GameObject:
   m_ObjectHideFlags: 0
@@ -511,9 +542,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1706820405}
   - component: {fileID: 1706820406}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: BoundingBoxTop
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -540,7 +571,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -605,6 +636,11 @@ Prefab:
       value: 
       objectReference: {fileID: 1143126175694020, guid: 9b079d254b58f4c8ba7461c25544ba48,
         type: 2}
+    - target: {fileID: 114279872267145782, guid: ade7e2330fafe45b08187563d2d3bd86,
+        type: 2}
+      propertyPath: Name
+      value: Alice
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ade7e2330fafe45b08187563d2d3bd86, type: 2}
   m_IsPrefabParent: 0

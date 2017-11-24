@@ -13,9 +13,16 @@
           </e>
         </e>
         <e p="Scripts" t="Include">
+          <e p="BattleFieldManager.cs" t="Include" />
           <e p="Bullet.cs" t="Include" />
+          <e p="Game" t="Include">
+            <e p="Game.cs" t="Include" />
+            <e p="GameEvent.cs" t="Include" />
+            <e p="GameState.cs" t="Include" />
+          </e>
           <e p="GameManager.cs" t="Include" />
-          <e p="SoldierManager.cs" t="Include" />
+          <e p="PinchZoom.cs" t="Include" />
+          <e p="Soldier.cs" t="Include" />
           <e p="Team.cs" t="Include" />
         </e>
       </e>
