@@ -22,6 +22,17 @@ public class Soldier : MonoBehaviour
     {
         transform.position = new Vector3((float) Math.Floor(position.x) + CenterOffset, (float) Math.Floor(position.y) + CenterOffset, 0);
     }
+
+    public void ShootToPoint(Vector2 point)
+    {
+        var bullet = Instantiate(BulletPrefab);
+        bullet.transform.position = transform.position;
+        //Math.tan
+        var rotationRad = Mathf.Atan2(bullet.transform.position.y - point.y, bullet.transform.position.x - point.x);
+        var deg = Mathf.Rad2Deg * rotationRad + 90;
+        bullet.transform.Rotate(0, 0, deg);
+        bullet.GetComponent<Bullet>().StartMove();
+    }
     
     // MARK: Private
 
@@ -32,10 +43,6 @@ public class Soldier : MonoBehaviour
 
     private void Start()
     {
-        var bullet = Instantiate(BulletPrefab);
-        bullet.transform.position = transform.position;
-        bullet.transform.Rotate(0, 0, 135);
-        bullet.GetComponent<Bullet>().StartMove();
     }
 
     private void FixedUpdate()

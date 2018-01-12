@@ -21,6 +21,7 @@
             <e p="Round" t="Include">
               <e p="GameEventHandler" t="Include">
                 <e p="SoldierMover.cs" t="Include" />
+                <e p="SoldierShooter.cs" t="Include" />
               </e>
               <e p="GameRoundEvent.cs" t="Include" />
               <e p="GameRoundEventType.cs" t="Include" />

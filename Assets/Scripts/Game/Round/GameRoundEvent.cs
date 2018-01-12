@@ -28,4 +28,25 @@ namespace Game.Round
         {
         }
     }
+
+    public class EnemySelectedGameRoundeEvent : GameRoundEvent
+    {
+        public EnemySelectedGameRoundeEvent(Soldier payload) : base(GameRoundEventType.EnemySelected, payload)
+        {
+        }
+    }
+    
+    public class MovingModeStartedGameRoundeEvent : GameRoundEvent
+    {
+        public MovingModeStartedGameRoundeEvent() : base(GameRoundEventType.MovingModeStarted, null)
+        {
+        }
+    }
+    
+    public class AttackModeStartedGameRoundeEvent : GameRoundEvent
+    {
+        public AttackModeStartedGameRoundeEvent() : base(GameRoundEventType.ShootingModeStarted, null)
+        {
+        }
+    }
 }

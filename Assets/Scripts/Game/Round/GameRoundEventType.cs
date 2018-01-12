@@ -2,8 +2,11 @@
 {
     public enum GameRoundEventType
     {
+        MovingModeStarted,
+        ShootingModeStarted,
         SoldierSelected,
         EmptyFieldSelected,
-        FinishRound
+        FinishRound,
+        EnemySelected
     }
 }

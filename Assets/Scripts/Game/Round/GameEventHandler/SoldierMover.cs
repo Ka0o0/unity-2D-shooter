@@ -6,17 +6,16 @@ namespace Game.Round.GameEventHandler
     {
         private Soldier _selectedSoldier;
 
-        public GameRoundState SelectSoldier(GameRoundEvent gameRoundEvent)
+        public void SelectSoldier(Soldier soldier)
         {
-            if (gameRoundEvent.Type == GameRoundEventType.SoldierSelected)
+            _selectedSoldier = soldier;
+        }
+
+        public GameRoundState StartMovementSate(GameRoundEvent gameRoundEvent)
+        {
+            if (gameRoundEvent.Type == GameRoundEventType.MovingModeStarted && _selectedSoldier != null)
             {
-                // This can be null
-                _selectedSoldier = gameRoundEvent.Payload as Soldier;
-                
-                if (_selectedSoldier)
-                {
-                    return GameRoundState.SoldierSelected;
-                }
+                return GameRoundState.SoldierMovement;
             }
             return GameRoundState.Idle;
         }

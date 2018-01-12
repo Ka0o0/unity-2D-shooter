@@ -65,4 +65,14 @@ public class BattleFieldManager : MonoBehaviour
                point.y >= 0 &&
                point.y < GameFieldHeight;
     }
+
+    public void ShootButtonTapped()
+    {
+        _gameStateMachine.HandleEvent(new AttackModeStartedGameRoundeEvent());
+    }
+    
+    public void MoveButtonTapped()
+    {
+        _gameStateMachine.HandleEvent(new MovingModeStartedGameRoundeEvent());
+    }
 }

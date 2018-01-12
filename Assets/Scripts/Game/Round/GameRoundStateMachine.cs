@@ -11,24 +11,40 @@ namespace Game.Round
 
     public class GameRoundStateMachine
     {
-
         public GameRoundState RoundState { get; private set; }
 
-        private readonly StateMachineTransitionMap  _stateMachineTransitionMap = new StateMachineTransitionMap();
+        private readonly StateMachineTransitionMap _stateMachineTransitionMap = new StateMachineTransitionMap();
+        private readonly SoldierMover _soldierMover = new SoldierMover();
+        private readonly SoldierShooter _soldierShooter = new SoldierShooter();
 
         public GameRoundStateMachine()
         {
             RoundState = GameRoundState.Idle;
-            
-            var soldierMover = new SoldierMover();
+
             _stateMachineTransitionMap.Add(
                 new Tuple<GameRoundState, GameRoundEventType>(GameRoundState.Idle, GameRoundEventType.SoldierSelected),
-                soldierMover.SelectSoldier);
+                SelectSoldier);
+
+            // Movement
             _stateMachineTransitionMap.Add(
                 new Tuple<GameRoundState, GameRoundEventType>(GameRoundState.SoldierSelected,
+                    GameRoundEventType.MovingModeStarted),
+                _soldierMover.StartMovementSate);
+            _stateMachineTransitionMap.Add(
+                new Tuple<GameRoundState, GameRoundEventType>(GameRoundState.SoldierMovement,
                     GameRoundEventType.EmptyFieldSelected),
-                soldierMover.MoveSoldier);
+                _soldierMover.MoveSoldier);
             
+            // Shooting
+            _stateMachineTransitionMap.Add(
+                new Tuple<GameRoundState, GameRoundEventType>(GameRoundState.SoldierSelected,
+                    GameRoundEventType.ShootingModeStarted),
+                _soldierShooter.StartShootingState);
+            _stateMachineTransitionMap.Add(
+                new Tuple<GameRoundState, GameRoundEventType>(GameRoundState.SoldierAttack,
+                    GameRoundEventType.EnemySelected),
+                _soldierShooter.ShootEnemy);
+
             _stateMachineTransitionMap.Add(
                 new Tuple<GameRoundState, GameRoundEventType>(GameRoundState.Idle, GameRoundEventType.FinishRound),
                 FinishRound);
@@ -51,6 +67,19 @@ namespace Game.Round
         private GameRoundState FinishRound(GameRoundEvent gameRoundEvent)
         {
             return GameRoundState.Finished;
+        }
+
+        private GameRoundState SelectSoldier(GameRoundEvent gameRoundEvent)
+        {
+            var soldier = gameRoundEvent.Payload as Soldier;
+            if (soldier)
+            {
+                _soldierMover.SelectSoldier(soldier);
+                _soldierShooter.SelectSoldier(soldier);
+                
+                return GameRoundState.SoldierSelected;
+            }
+            return GameRoundState.Idle;
         }
     }
 }
