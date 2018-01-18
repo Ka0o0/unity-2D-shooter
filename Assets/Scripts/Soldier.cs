@@ -8,11 +8,12 @@ public class Soldier : MonoBehaviour
 {
     public Team Team;
     public double HealthPoints = 100;
+    public int MaxShootingsCount = 1;
     public GameObject BulletPrefab;
     public String Name;
     public bool IsSelected { get; set; }
     public bool IsTeamActive { get; set; }
-    
+
     private float CenterOffset = (float) 0.5;
 
     public bool CanMoveToPosition(Vector2 position)

@@ -37,8 +37,6 @@ namespace Game.Round.GameEventHandler
                 }
                 
                 _selectedSoldier.MoveToPosition(position);
-                // TODO only for testing
-                return GameRoundState.Finished;
             }
             
             return GameRoundState.Idle;
