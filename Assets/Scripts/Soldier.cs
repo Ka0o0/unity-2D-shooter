@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game;
 using UnityEngine;
 
 public class Soldier : MonoBehaviour
@@ -9,7 +10,9 @@ public class Soldier : MonoBehaviour
     public double HealthPoints = 100;
     public GameObject BulletPrefab;
     public String Name;
-
+    public bool IsSelected { get; set; }
+    public bool IsTeamActive { get; set; }
+    
     private float CenterOffset = (float) 0.5;
 
     public bool CanMoveToPosition(Vector2 position)
@@ -47,6 +50,12 @@ public class Soldier : MonoBehaviour
 
     private void FixedUpdate()
     {
+    }
+
+    private void Update()
+    {
+        GetComponent<Animator>().SetBool("IsSelected", IsSelected);
+        GetComponent<Animator>().SetBool("IsTeamActive", IsTeamActive);
     }
 
     private void OnTriggerEnter2D(Collider2D other)

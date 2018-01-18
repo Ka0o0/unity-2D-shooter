@@ -5,6 +5,7 @@
       <e p="Assembly-CSharp-Editor-firstpass.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
+        <e p="MenuManager.cs" t="Include" />
         <e p="Plugins" t="Include">
           <e p="Editor" t="Include">
             <e p="JetBrains" t="Include">
@@ -27,6 +28,9 @@
               <e p="GameRoundEventType.cs" t="Include" />
               <e p="GameRoundState.cs" t="Include" />
               <e p="GameRoundStateMachine.cs" t="Include" />
+              <e p="GameStateObserver" t="Include">
+                <e p="SoldierSelector.cs" t="Include" />
+              </e>
             </e>
           </e>
           <e p="GameManager.cs" t="Include" />

@@ -49,4 +49,11 @@ namespace Game.Round
         {
         }
     }
+    
+    public class FinishRoundEvent : GameRoundEvent
+    {
+        public FinishRoundEvent() : base(GameRoundEventType.FinishRound, null)
+        {
+        }
+    }
 }

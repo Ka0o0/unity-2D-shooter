@@ -1,19 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Game.Round.GameEventHandler;
+using Game.Round.GameStateObserver;
 using UnityEngine;
 using Utility.Tuple;
 
 namespace Game.Round
 {
     using StateMachineTransitionMap =
-        Dictionary<Tuple<GameRoundState, GameRoundEventType>, Func<GameRoundEvent, GameRoundState>>;
+        Dictionary<Tuple<GameRoundState, GameRoundEventType>, System.Func<GameRoundEvent, GameRoundState>>;
+    using StateMachineStateObserverList =
+        LinkedList<Tuple<GameRoundState, System.Action<GameRoundEvent>>>;
 
     public class GameRoundStateMachine
     {
         public GameRoundState RoundState { get; private set; }
 
         private readonly StateMachineTransitionMap _stateMachineTransitionMap = new StateMachineTransitionMap();
+        private readonly StateMachineStateObserverList _stateChangeObservers = new StateMachineStateObserverList();
         private readonly SoldierMover _soldierMover = new SoldierMover();
         private readonly SoldierShooter _soldierShooter = new SoldierShooter();
 
@@ -34,7 +37,7 @@ namespace Game.Round
                 new Tuple<GameRoundState, GameRoundEventType>(GameRoundState.SoldierMovement,
                     GameRoundEventType.EmptyFieldSelected),
                 _soldierMover.MoveSoldier);
-            
+
             // Shooting
             _stateMachineTransitionMap.Add(
                 new Tuple<GameRoundState, GameRoundEventType>(GameRoundState.SoldierSelected,
@@ -48,6 +51,16 @@ namespace Game.Round
             _stateMachineTransitionMap.Add(
                 new Tuple<GameRoundState, GameRoundEventType>(GameRoundState.Idle, GameRoundEventType.FinishRound),
                 FinishRound);
+
+            // Soldier Selection
+            var soldierSelector = new SoldierSelector();
+            _stateChangeObservers.AddLast(
+                new Tuple<GameRoundState, System.Action<GameRoundEvent>>(GameRoundState.SoldierSelected,
+                    soldierSelector.SoldierSelected)
+            );
+            _stateChangeObservers.AddLast(
+                new Tuple<GameRoundState, System.Action<GameRoundEvent>>(GameRoundState.Idle, soldierSelector.Idling)
+            );
         }
 
         public void HandleEvent(GameRoundEvent gameRoundEvent)
@@ -60,6 +73,13 @@ namespace Game.Round
                 if (oldState != RoundState)
                 {
                     Debug.Log("State changed to " + RoundState);
+                }
+                foreach (var observerTuple in _stateChangeObservers)
+                {
+                    if (observerTuple.Item1 == RoundState)
+                    {
+                        observerTuple.Item2(gameRoundEvent);
+                    }
                 }
             }
         }
@@ -76,7 +96,7 @@ namespace Game.Round
             {
                 _soldierMover.SelectSoldier(soldier);
                 _soldierShooter.SelectSoldier(soldier);
-                
+
                 return GameRoundState.SoldierSelected;
             }
             return GameRoundState.Idle;

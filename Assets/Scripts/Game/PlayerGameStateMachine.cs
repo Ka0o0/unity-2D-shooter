@@ -1,17 +1,20 @@
-﻿using Game.Round;
+﻿using System.Collections.Generic;
+using Game.Round;
 using UnityEngine;
 
 namespace Game
 {
-    public class PlayerGameStateMachine
+    public class PlayerGameStateMachine: MonoBehaviour
     {
-        private PlayerGameState _state;
-        private GameRoundStateMachine _gameRoundStateMachine;
+        private PlayerGameState State;
+        public GameRoundStateMachine GameRoundStateMachine;
+        public List<GameObject> Soldiers;
 
-        public PlayerGameStateMachine(PlayerGameState initialState)
+        private void Start()
         {
-            _state = initialState;
+            State = PlayerGameState.AlicesRound;
             CreateNewGameRoundStateMachine();
+            UpdateSoldiersTeamSelectionState();
         }
 
         public void HandleEvent(GameRoundEvent gameEvent)
@@ -20,21 +23,21 @@ namespace Game
             {
                 var soldier = gameEvent.Payload as Soldier;
 
-                if (isSoldierEnemy(soldier))
+                if (IsSoldierEnemy(soldier))
                 {
-                    _gameRoundStateMachine.HandleEvent(new EnemySelectedGameRoundeEvent(soldier));
+                    GameRoundStateMachine.HandleEvent(new EnemySelectedGameRoundeEvent(soldier));
                 }
                 else
                 {
-                    _gameRoundStateMachine.HandleEvent(gameEvent);
+                    GameRoundStateMachine.HandleEvent(gameEvent);
                 }
             }
             else
             {
-                _gameRoundStateMachine.HandleEvent(gameEvent);
+                GameRoundStateMachine.HandleEvent(gameEvent);
             }
 
-            if (_gameRoundStateMachine.RoundState == GameRoundState.Finished)
+            if (GameRoundStateMachine.RoundState == GameRoundState.Finished)
             {
                 SwapState();
                 CreateNewGameRoundStateMachine();
@@ -43,19 +46,29 @@ namespace Game
 
         private void CreateNewGameRoundStateMachine()
         {
-            _gameRoundStateMachine = new GameRoundStateMachine();
+            GameRoundStateMachine = new GameRoundStateMachine();
         }
 
         private void SwapState()
         {
-            _state = _state == PlayerGameState.AlicesRound ? PlayerGameState.BobsRound : PlayerGameState.AlicesRound;
-            Debug.Log("Player's round switched to " + _state);
+            State = State == PlayerGameState.AlicesRound ? PlayerGameState.BobsRound : PlayerGameState.AlicesRound;
+            Debug.Log("Player's round switched to " + State);
+            UpdateSoldiersTeamSelectionState();
         }
 
-        private bool isSoldierEnemy(Soldier soldier)
+        private bool IsSoldierEnemy(Soldier soldier)
         {
-            return (_state == PlayerGameState.BobsRound && soldier.Team == Team.TeamAlice) ||
-                   (_state == PlayerGameState.AlicesRound && soldier.Team == Team.TeamBob);
+            return (State == PlayerGameState.BobsRound && soldier.Team == Team.TeamAlice) ||
+                   (State == PlayerGameState.AlicesRound && soldier.Team == Team.TeamBob);
+        }
+
+        private void UpdateSoldiersTeamSelectionState()
+        {
+            foreach (var goSoldier in Soldiers)
+            {
+                var soldier = goSoldier.GetComponent<Soldier>();
+                soldier.IsTeamActive = !IsSoldierEnemy(soldier);
+            }
         }
     }
 }

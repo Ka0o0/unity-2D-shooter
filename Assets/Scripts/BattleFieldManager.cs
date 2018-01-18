@@ -6,20 +6,14 @@ public class BattleFieldManager : MonoBehaviour
 {
     public int GameFieldWidth = 10;
     public int GameFieldHeight = 10;
-
-    private PlayerGameStateMachine _gameStateMachine;
-
-    private void Start()
-    {
-        _gameStateMachine = new PlayerGameStateMachine(PlayerGameState.AlicesRound);
-    }
+    public GameObject PlayerStateMachine;
 
     private void Update()
     {
         var gameEvent = ReadGameEventFromUserInput();
         if (gameEvent != null)
         {
-            _gameStateMachine.HandleEvent(gameEvent);
+            PlayerStateMachine.GetComponent<PlayerGameStateMachine>().HandleEvent(gameEvent);
         }
     }
 
@@ -68,11 +62,16 @@ public class BattleFieldManager : MonoBehaviour
 
     public void ShootButtonTapped()
     {
-        _gameStateMachine.HandleEvent(new AttackModeStartedGameRoundeEvent());
+        PlayerStateMachine.GetComponent<PlayerGameStateMachine>().HandleEvent(new AttackModeStartedGameRoundeEvent());
     }
     
     public void MoveButtonTapped()
     {
-        _gameStateMachine.HandleEvent(new MovingModeStartedGameRoundeEvent());
+        PlayerStateMachine.GetComponent<PlayerGameStateMachine>().HandleEvent(new MovingModeStartedGameRoundeEvent());
+    }
+
+    public void FinishButtonTapped()
+    {
+        PlayerStateMachine.GetComponent<PlayerGameStateMachine>().HandleEvent(new FinishRoundEvent());
     }
 }
