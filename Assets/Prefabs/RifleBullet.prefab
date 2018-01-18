@@ -101,6 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Damage: 20
   Speed: 300
+  MaxTravelDistance: 8
 --- !u!212 &212806858717561898
 SpriteRenderer:
   m_ObjectHideFlags: 1
