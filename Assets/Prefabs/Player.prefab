@@ -22,7 +22,8 @@ GameObject:
   - component: {fileID: 212270746213510210}
   - component: {fileID: 58623435975313576}
   - component: {fileID: 114279872267145782}
-  m_Layer: 0
+  - component: {fileID: 95544889113462462}
+  m_Layer: 11
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -57,6 +58,23 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 2.2
+--- !u!95 &95544889113462462
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1364321532894472}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: e38cfe89e989b496c8c18d4833d59209, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114279872267145782
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -68,10 +86,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba016420089ff4d93a751f8dff709f1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Team: 0
+  Team: 1
   HealthPoints: 100
-  BulletPrefab: {fileID: 0}
-  Name: 
+  BulletPrefab: {fileID: 1143126175694020, guid: 9b079d254b58f4c8ba7461c25544ba48,
+    type: 2}
+  Name: Alice
 --- !u!212 &212270746213510210
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -103,8 +122,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 635893771
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 312e5c1358aee4bb99298d4268736541, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
