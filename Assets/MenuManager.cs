@@ -6,23 +6,44 @@ using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
+    public GameObject GameStateMachine;
+    public GameObject SoldierActionGameMenuCanvas;
+    public GameObject PlayerIdleMenuCanvas;
+    public GameObject MainMenuCanvas;
 
-	public GameObject GameStateMachine;
-	public GameObject SoldierActionGameMenuCanvas;
-	public GameObject PlayerIdleMenuCanvas;
+    private bool _isMainMenuShown = false;
 
-	private void Update()
-	{
-		var stateMachine = GameStateMachine.GetComponent<PlayerGameStateMachine>();
-		if (stateMachine.GameRoundStateMachine.RoundState == GameRoundState.Idle)
-		{
-			PlayerIdleMenuCanvas.SetActive(true);
-			SoldierActionGameMenuCanvas.SetActive(false);
-		}
-		else
-		{
-			PlayerIdleMenuCanvas.SetActive(false);
-			SoldierActionGameMenuCanvas.SetActive(true);
-		}
-	}
+    public void ShowMainMenu()
+    {
+        _isMainMenuShown = true;
+    }
+    
+    public void HideMainMenu()
+    {
+        _isMainMenuShown = false;
+    }
+
+    private void Update()
+    {
+        var stateMachine = GameStateMachine.GetComponent<PlayerGameStateMachine>();
+
+        if (_isMainMenuShown)
+        {
+            PlayerIdleMenuCanvas.SetActive(false);
+            SoldierActionGameMenuCanvas.SetActive(false);
+            MainMenuCanvas.SetActive(true);
+        }
+        else if (stateMachine.GameRoundStateMachine.RoundState == GameRoundState.Idle)
+        {
+            SoldierActionGameMenuCanvas.SetActive(false);
+            MainMenuCanvas.SetActive(false);
+            PlayerIdleMenuCanvas.SetActive(true);
+        }
+        else
+        {
+            PlayerIdleMenuCanvas.SetActive(false);
+            MainMenuCanvas.SetActive(false);
+            SoldierActionGameMenuCanvas.SetActive(true);
+        }
+    }
 }
