@@ -46,6 +46,9 @@ TagManager:
   - name: Background
     uniqueID: 1989214657
     locked: 0
+  - name: Grid
+    uniqueID: 18894209
+    locked: 0
   - name: Bullet
     uniqueID: 603189365
     locked: 0
