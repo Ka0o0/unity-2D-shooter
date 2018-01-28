@@ -11,17 +11,19 @@ namespace PathFinding
     public class SoldierMovementGameFieldPathFinding
     {
         private Soldier _soldier;
-        private GameObject[,] _battleField;
+        private GameObject[,] _battleFieldObjects;
+        private GameObject[,] _battleFieldBlocks;
 
         private Vector2Int SoldierPosition
         {
             get { return new Vector2Int((int) _soldier.transform.position.x, (int) _soldier.transform.position.y); }
         }
 
-        public SoldierMovementGameFieldPathFinding(Soldier soldier, GameObject[,] battleField)
+        public SoldierMovementGameFieldPathFinding(Soldier soldier, GameObject[,] battleFieldObjects, GameObject[,] battleFieldBlocksBlocks)
         {
             _soldier = soldier;
-            _battleField = battleField;
+            _battleFieldObjects = battleFieldObjects;
+            _battleFieldBlocks = battleFieldBlocksBlocks;
         }
 
         public List<Utility.Tuple.Tuple<Vector2Int, Vector2Int[]>> GetReachablePaths()
@@ -33,8 +35,8 @@ namespace PathFinding
             var minPoint = bounds.Item1;
             var maxPoint = bounds.Item2;
 
-            var dist = new double[_battleField.GetLength(0), _battleField.GetLength(1)];
-            var prev = new Vector2Int?[_battleField.GetLength(0), _battleField.GetLength(1)];
+            var dist = new double[_battleFieldBlocks.GetLength(0), _battleFieldBlocks.GetLength(1)];
+            var prev = new Vector2Int?[_battleFieldBlocks.GetLength(0), _battleFieldBlocks.GetLength(1)];
             var queue = new List<Vector2Int>();
             var inspectedNodes = new List<Vector2Int>();
 
@@ -46,7 +48,7 @@ namespace PathFinding
                 {
                     var newNode = new Vector2Int(i, j);
 
-                    if (IsInsideBoundsOfPossibleWalkingArea(newNode))
+                    if (IsValidBlockToConsider(newNode))
                     {
                         dist[i, j] = double.PositiveInfinity;
                         prev[i, j] = null;
@@ -134,18 +136,18 @@ namespace PathFinding
             var neighbors = new List<Vector2Int>();
 
             // Top
-            AddNeighborIfIsInsideBoundsAndNotBlockedByObstacle(node, 0, 1, neighbors);
+            AddNeighborIfIsInsideBoundsAndNotBlockedByWall(node, 0, 1, neighbors);
             // Right
-            AddNeighborIfIsInsideBoundsAndNotBlockedByObstacle(node, 1, 0, neighbors);
+            AddNeighborIfIsInsideBoundsAndNotBlockedByWall(node, 1, 0, neighbors);
             // Bottom
-            AddNeighborIfIsInsideBoundsAndNotBlockedByObstacle(node, -1, 0, neighbors);
+            AddNeighborIfIsInsideBoundsAndNotBlockedByWall(node, -1, 0, neighbors);
             // Left
-            AddNeighborIfIsInsideBoundsAndNotBlockedByObstacle(node, 0, -1, neighbors);
+            AddNeighborIfIsInsideBoundsAndNotBlockedByWall(node, 0, -1, neighbors);
 
             return neighbors.ToArray();
         }
 
-        private void AddNeighborIfIsInsideBoundsAndNotBlockedByObstacle(Vector2Int node, int deltaX, int deltaY,
+        private void AddNeighborIfIsInsideBoundsAndNotBlockedByWall(Vector2Int node, int deltaX, int deltaY,
             List<Vector2Int> neighbors)
         {
             var newPosition = new Vector2Int(
@@ -153,16 +155,50 @@ namespace PathFinding
                 node.y + deltaY
             );
 
-            if (IsInsideBoundsOfPossibleWalkingArea(newPosition) && !NodesBlockedByObstacle(node, newPosition))
+            if (IsValidBlockToConsider(newPosition) && !NodesBlockedByWall(node, newPosition))
             {
                 neighbors.Add(newPosition);
             }
         }
 
-        private bool NodesBlockedByObstacle(Vector2Int node1, Vector2 node2)
+        private bool NodesBlockedByWall(Vector2Int node1, Vector2Int node2)
         {
-            // TODO Implement me
+            var fieldBlock = _battleFieldBlocks[node1.x, node1.y].GetComponent<BattleFieldBlock>();
+            var delta = node1 - node2;
+            
+            if (delta.x < 0 && fieldBlock.HasLeftWall)
+            {
+                return true;
+            }
+            
+            if (delta.x > 0 && fieldBlock.HasRightWall)
+            {
+                return true;
+            }
+            
+            if (delta.y < 0 && fieldBlock.HasBottomWall)
+            {
+                return true;
+            }
+            
+            if (delta.y > 0 && fieldBlock.HasTopWall)
+            {
+                return true;
+            }
+
             return false;
+        }
+
+        private bool IsValidBlockToConsider(Vector2Int position)
+        {
+            if (!IsInsideBoundsOfPossibleWalkingArea(position))
+            {
+                return false;
+            }
+            
+            
+            // Only true if there is no other object at the given position
+            return _battleFieldObjects[position.x, position.y] == null || position == SoldierPosition;
         }
 
         private bool IsInsideBoundsOfPossibleWalkingArea(Vector2Int position)
@@ -189,14 +225,14 @@ namespace PathFinding
             var minPoint = _soldier.MinWalkingPoint; // Soldier will take care of checking if x||y < 0
             var maxPoint = _soldier.MaxWalkingPoint;
 
-            if (maxPoint.x >= _battleField.GetLength(0))
+            if (maxPoint.x >= _battleFieldBlocks.GetLength(0))
             {
-                maxPoint.x = _battleField.GetLength(0) - 1;
+                maxPoint.x = _battleFieldBlocks.GetLength(0) - 1;
             }
 
-            if (maxPoint.y >= _battleField.GetLength(1))
+            if (maxPoint.y >= _battleFieldBlocks.GetLength(1))
             {
-                maxPoint.y = _battleField.GetLength(1) - 1;
+                maxPoint.y = _battleFieldBlocks.GetLength(1) - 1;
             }
 
             return new Utility.Tuple.Tuple<Vector2Int, Vector2Int>(minPoint, maxPoint);

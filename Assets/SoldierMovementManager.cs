@@ -39,8 +39,9 @@ public class SoldierMovementManager : MonoBehaviour
         _previouslySelectedBlocks = new List<GameObject>();
 
         var battleFieldManager = BattleFieldManagerObject.GetComponent<BattleFieldManager>();
-        var battleField = battleFieldManager.BattleField;
-        var djikstra = new SoldierMovementGameFieldPathFinding(_soldier, battleField);
+        var battleFieldBlocks = battleFieldManager.BattleFieldBlocks;
+        var djikstra = new SoldierMovementGameFieldPathFinding(_soldier, battleFieldManager.BattleField,
+            battleFieldManager.BattleFieldBlocks);
 
         var paths = djikstra.GetReachablePaths();
 
