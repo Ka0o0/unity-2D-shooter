@@ -1,4 +1,5 @@
-﻿using Game;
+﻿using System.Collections.Generic;
+using Game;
 using Game.Round;
 using UnityEngine;
 
@@ -7,6 +8,23 @@ public class BattleFieldManager : MonoBehaviour
     public int GameFieldWidth = 10;
     public int GameFieldHeight = 10;
     public GameObject PlayerStateMachine;
+    public List<GameObject> AllSingsOnSeBattlefield;
+
+    public GameObject[,] _battlefield;
+
+    private void Start()
+    {
+        _battlefield = new GameObject[GameFieldWidth, GameFieldHeight];
+
+        AllSingsOnSeBattlefield.ForEach(element =>
+        {
+            var x = (int) element.transform.position.x;
+            var y = (int) element.transform.position.y;
+            _battlefield[x, y] = element;
+        });
+
+        PlayerStateMachine.GetComponent<PlayerGameStateMachine>().Battlefield = _battlefield;
+    }
 
     private void Update()
     {
@@ -35,18 +53,10 @@ public class BattleFieldManager : MonoBehaviour
         var camera = Camera.main;
         var clickedPositionInWorld = new Vector2(camera.ScreenToWorldPoint(Input.mousePosition).x,
             camera.ScreenToWorldPoint(Input.mousePosition).y);
-        var hit = Physics2D.Raycast(clickedPositionInWorld, Vector2.zero);
-        if (hit)
+
+        if (PointIsInsideGameField(clickedPositionInWorld))
         {
-            var selectedGameObject = hit.collider.gameObject;
-            if (selectedGameObject.CompareTag("Player"))
-            {
-                return new SoldierSelectedGameRoundEvent(selectedGameObject.GetComponent<Soldier>());
-            }
-        }
-        else if (PointIsInsideGameField(clickedPositionInWorld))
-        {
-            return new EmptyFieldSelectedGameRoundEvent(clickedPositionInWorld);
+            return new FieldSelectedGameRoundEvent(clickedPositionInWorld);
         }
 
         return null;
@@ -64,7 +74,7 @@ public class BattleFieldManager : MonoBehaviour
     {
         PlayerStateMachine.GetComponent<PlayerGameStateMachine>().HandleEvent(new AttackModeStartedGameRoundeEvent());
     }
-    
+
     public void MoveButtonTapped()
     {
         PlayerStateMachine.GetComponent<PlayerGameStateMachine>().HandleEvent(new MovingModeStartedGameRoundeEvent());
