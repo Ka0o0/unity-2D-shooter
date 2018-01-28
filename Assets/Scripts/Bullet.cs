@@ -8,6 +8,7 @@ public class Bullet : MonoBehaviour
     public float Damage;
     public int Speed;
     public float MaxTravelDistance;
+    public AudioClip ExplosionSound;
 
     private Vector3 _startPosition;
 
@@ -35,7 +36,11 @@ public class Bullet : MonoBehaviour
         var tags = new[] {"Obstacle", "Player"};
         if (tags.Any(tagToMatch => otherGameObject.CompareTag(tagToMatch)))
         {
-            gameObject.GetComponent<AudioSource>().Play();
+            if (ExplosionSound)
+            {
+                AudioSource.PlayClipAtPoint(ExplosionSound, transform.position);
+            }
+
             Destroy(gameObject);
         }
     }
