@@ -16,6 +16,7 @@ public class Soldier : MonoBehaviour
 
     private float CenterOffset = (float) 0.5;
     private HealthBarHelper _healthBarHelper;
+    private Light _soldierLight;
 
     public bool CanMoveToPosition(Vector2 position)
     {
@@ -50,6 +51,7 @@ public class Soldier : MonoBehaviour
     private void Start()
     {
         _healthBarHelper = GetComponentInChildren<HealthBarHelper>();
+        _soldierLight = GetComponentInChildren<Light>();
     }
 
     private void FixedUpdate()
@@ -63,6 +65,7 @@ public class Soldier : MonoBehaviour
 
         _healthBarHelper.CurrentHpPercentage = HealthPoints;
         _healthBarHelper.gameObject.SetActive(IsTeamActive);
+        _soldierLight.gameObject.SetActive(IsTeamActive);
     }
 
     private void OnTriggerEnter2D(Collider2D other)

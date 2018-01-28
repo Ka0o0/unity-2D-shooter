@@ -263,7 +263,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 103780448}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 300, y: 126.907486, z: 0}
+  m_LocalPosition: {x: 300, y: 150.14767, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 293495060}
@@ -496,8 +496,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 236232602}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 789, y: 309.5, z: 0}
-  m_LocalScale: {x: 1.9725, y: 1.9725, z: 1.9725}
+  m_LocalPosition: {x: 609.5, y: 274.5, z: 0}
+  m_LocalScale: {x: 1.52375, y: 1.52375, z: 1.52375}
   m_Children:
   - {fileID: 103780449}
   - {fileID: 2110308871}
@@ -862,8 +862,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 518041251}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 789, y: 309.5, z: 0}
-  m_LocalScale: {x: 1.9725, y: 1.9725, z: 1.9725}
+  m_LocalPosition: {x: 609.5, y: 274.5, z: 0}
+  m_LocalScale: {x: 1.52375, y: 1.52375, z: 1.52375}
   m_Children:
   - {fileID: 1950107578}
   - {fileID: 1779652146}
@@ -1113,6 +1113,11 @@ Prefab:
     - target: {fileID: 1364321532894472, guid: ade7e2330fafe45b08187563d2d3bd86, type: 2}
       propertyPath: m_Name
       value: SoldierBob
+      objectReference: {fileID: 0}
+    - target: {fileID: 114279872267145782, guid: ade7e2330fafe45b08187563d2d3bd86,
+        type: 2}
+      propertyPath: Team
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ade7e2330fafe45b08187563d2d3bd86, type: 2}
@@ -1405,7 +1410,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: b06171161039b4c4cb7889f3001fbbe7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1634,7 +1639,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1779652145}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -100, y: 126.907486, z: 0}
+  m_LocalPosition: {x: -100, y: 150.14767, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 34196902}
@@ -1952,7 +1957,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1950107577}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -300, y: 126.907486, z: 0}
+  m_LocalPosition: {x: -300, y: 150.14767, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1873963355}
@@ -2214,11 +2219,6 @@ Prefab:
       propertyPath: m_Name
       value: SoldierAlice
       objectReference: {fileID: 0}
-    - target: {fileID: 114279872267145782, guid: ade7e2330fafe45b08187563d2d3bd86,
-        type: 2}
-      propertyPath: Team
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ade7e2330fafe45b08187563d2d3bd86, type: 2}
   m_IsPrefabParent: 0
@@ -2323,7 +2323,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2110308870}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -300, y: 126.907486, z: 0}
+  m_LocalPosition: {x: -300, y: 150.14767, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 407926159}
