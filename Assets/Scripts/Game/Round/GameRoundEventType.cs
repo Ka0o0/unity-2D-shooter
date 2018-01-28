@@ -6,6 +6,7 @@
         ShootingModeStarted,
         FieldSelected,
         FinishRound,
-        SoldierFinishedMovement
+        SoldierFinishedMovement,
+        Cancel
     }
 }

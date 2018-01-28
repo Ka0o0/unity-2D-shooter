@@ -42,6 +42,9 @@ namespace Game.Round
             _stateMachineTransitionMap.Add(
                 new Tuple<GameRoundState, GameRoundEventType>(GameRoundState.Idle, GameRoundEventType.FieldSelected),
                 SelectSoldier);
+            _stateMachineTransitionMap.Add(
+                new Tuple<GameRoundState, GameRoundEventType>(GameRoundState.SoldierSelected, GameRoundEventType.Cancel),
+                DeselectSoldier);
 
             // Movement
             _stateMachineTransitionMap.Add(
@@ -119,6 +122,11 @@ namespace Game.Round
             _soldierSelector.SelectSoldier(soldier);
 
             return GameRoundState.SoldierSelected;
+        }
+
+        private GameRoundState DeselectSoldier(GameRoundEvent gameRoundEvent)
+        {
+            return GameRoundState.Idle;
         }
     }
 }

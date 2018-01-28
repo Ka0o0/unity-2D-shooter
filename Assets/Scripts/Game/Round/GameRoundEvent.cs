@@ -48,4 +48,11 @@ namespace Game.Round
         {
         }
     }
+    
+    public class CancelEvent : GameRoundEvent
+    {
+        public CancelEvent() : base(GameRoundEventType.Cancel, null)
+        {
+        }
+    }
 }

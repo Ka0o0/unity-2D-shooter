@@ -15,6 +15,11 @@ public class BattleFieldManager : MonoBehaviour
     public List<GameObject> AllSingsOnSeBattlefield;
     public GameObject[,] BattleField;
 
+    public void HideSoldierActionMenu()
+    {
+        PlayerStateMachine.GetComponent<PlayerGameStateMachine>().HandleEvent(new CancelEvent());
+    }
+
     private void Start()
     {
         BattleFieldBlocks = new GameObject[GameFieldWidth, GameFieldHeight];
