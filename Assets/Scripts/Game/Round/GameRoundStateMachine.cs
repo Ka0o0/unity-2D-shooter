@@ -50,6 +50,11 @@ namespace Game.Round
                 new Tuple<GameRoundState, GameRoundEventType>(GameRoundState.SoldierMovement,
                     GameRoundEventType.FieldSelected),
                 _soldierMover.MoveSoldier);
+            _stateMachineTransitionMap.Add(
+                new Tuple<GameRoundState, GameRoundEventType>(GameRoundState.SoldierMoving,
+                    GameRoundEventType.SoldierFinishedMovement),
+                _soldierMover.FinishMovement);
+
 
             // Shooting
             _stateMachineTransitionMap.Add(

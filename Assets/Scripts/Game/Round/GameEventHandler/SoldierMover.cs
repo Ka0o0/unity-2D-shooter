@@ -21,6 +21,12 @@ namespace Game.Round.GameEventHandler
             return GameRoundState.Idle;
         }
 
+        public GameRoundState FinishMovement(GameRoundEvent gameRoundEvent)
+        {
+            _selectedSoldier = null;
+            return GameRoundState.Idle;
+        }
+
         public GameRoundState MoveSoldier(GameRoundEvent gameRoundEvent)
         {
             if (_selectedSoldier == null)
@@ -31,25 +37,36 @@ namespace Game.Round.GameEventHandler
             if (gameRoundEvent.Type == GameRoundEventType.FieldSelected)
             {
                 var position = (Vector2) gameRoundEvent.Payload;
-                // Keep the current state (SoldierSelected) when the soldier can't move to a certain position
-                if (!CanMoveToPosition(position))
+                var targetPosition = new Vector2Int(
+                    (int) position.x,
+                    (int) position.y
+                );
+
+                var targetPath = GetTargetPathToPosition(targetPosition);
+                if (targetPath == null)
                 {
                     return GameRoundState.SoldierSelected;
                 }
 
+                // Keep the Battlefield objects up to date
                 var oldPosition = _selectedSoldier.transform.position;
                 Battlefield[(int) position.x, (int) position.y] = Battlefield[(int) oldPosition.x, (int) oldPosition.y];
                 Battlefield[(int) oldPosition.x, (int) oldPosition.y] = null;
 
-                _selectedSoldier.MoveToPosition(position);
+
+                _selectedSoldier.MovementManager.MoveToPositionUsingPath(targetPosition, targetPath);
+                return _selectedSoldier.MovementManager.IsMoving ? GameRoundState.SoldierMoving : GameRoundState.Idle;
             }
 
             return GameRoundState.Idle;
         }
 
-        private bool CanMoveToPosition(Vector2 position)
+        private Vector2Int[] GetTargetPathToPosition(Vector2Int position)
         {
-            return Battlefield[(int) position.x, (int) position.y] == null;
+            var movementManager = _selectedSoldier.MovementManager;
+            var pathFinder = movementManager.MakeNewPathFinder();
+            var possiblePaths = pathFinder.GetReachablePaths();
+            return possiblePaths.ContainsKey(position) ? possiblePaths[position] : null;
         }
     }
 }

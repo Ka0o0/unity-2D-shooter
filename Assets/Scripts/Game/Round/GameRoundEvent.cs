@@ -4,7 +4,6 @@ namespace Game.Round
 {
     public class GameRoundEvent
     {
-        
         public readonly GameRoundEventType Type;
         public readonly object Payload;
 
@@ -15,30 +14,37 @@ namespace Game.Round
         }
     }
 
-    public class FieldSelectedGameRoundEvent: GameRoundEvent
+    public class FieldSelectedGameRoundEvent : GameRoundEvent
     {
         public FieldSelectedGameRoundEvent(Vector2 payload) : base(GameRoundEventType.FieldSelected, payload)
         {
         }
     }
-    
+
     public class MovingModeStartedGameRoundeEvent : GameRoundEvent
     {
         public MovingModeStartedGameRoundeEvent() : base(GameRoundEventType.MovingModeStarted, null)
         {
         }
     }
-    
+
     public class AttackModeStartedGameRoundeEvent : GameRoundEvent
     {
         public AttackModeStartedGameRoundeEvent() : base(GameRoundEventType.ShootingModeStarted, null)
         {
         }
     }
-    
+
     public class FinishRoundEvent : GameRoundEvent
     {
         public FinishRoundEvent() : base(GameRoundEventType.FinishRound, null)
+        {
+        }
+    }
+
+    public class SoldierFinishedMovementEvent : GameRoundEvent
+    {
+        public SoldierFinishedMovementEvent() : base(GameRoundEventType.SoldierFinishedMovement, null)
         {
         }
     }

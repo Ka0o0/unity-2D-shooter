@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game;
+using Game.Round;
 using PathFinding;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -9,18 +11,85 @@ public class SoldierMovementManager : MonoBehaviour
 {
     public GameObject BattleFieldManagerObject;
 
-    private Soldier _soldier;
+    public int IntermediateWalkingDistance = 3;
+    public int FarWalkingDistance = 5;
+    public bool ShowDistanceCircles { get; set; }
+    public bool IsMoving { get; private set; }
+
+    public Vector2Int MinWalkingPoint
+    {
+        get
+        {
+            var minX = (int) transform.position.x - FarWalkingDistance;
+            var minY = (int) transform.position.y - FarWalkingDistance;
+
+            return new Vector2Int(
+                minX >= 0 ? minX : 0,
+                minY >= 0 ? minY : 0
+            );
+        }
+    }
+
+    public Vector2Int MaxWalkingPoint
+    {
+        get
+        {
+            return new Vector2Int(
+                (int) transform.position.x + FarWalkingDistance,
+                (int) transform.position.y + FarWalkingDistance
+            );
+        }
+    }
 
     private List<GameObject> _previouslySelectedBlocks;
+    private Vector2Int[] _movementPath;
+    private int _currentPathPosition;
+    private Vector2Int _targetPosition;
+    private float _lastMovementTime = 0;
+    private float CenterOffset = (float) 0.5;
+
+    public void MoveToPositionUsingPath(Vector2Int position, Vector2Int[] path)
+    {
+        if (IsMoving)
+        {
+            return;
+        }
+
+        _currentPathPosition = 0;
+        _targetPosition = position;
+        _movementPath = path;
+        IsMoving = true;
+    }
 
     private void Start()
     {
-        _soldier = GetComponent<Soldier>();
+        IsMoving = false;
+        Assert.IsTrue(IntermediateWalkingDistance < FarWalkingDistance);
+    }
+
+    private void FixedUpdate()
+    {
+        if (IsTimeToMoveForward() && IsMoving && _movementPath != null)
+        {
+            _currentPathPosition++;
+            if (_currentPathPosition < _movementPath.Length)
+            {
+                MoveToPosition(_movementPath[_currentPathPosition]);
+                _lastMovementTime = Time.timeSinceLevelLoad;
+            }
+            else
+            {
+                _movementPath = null;
+                _currentPathPosition = 0;
+                IsMoving = false;
+                NotifyFinishedMoving();
+            }
+        }
     }
 
     private void Update()
     {
-        if (_soldier.IsSelected)
+        if (ShowDistanceCircles)
         {
             if (_previouslySelectedBlocks == null)
             {
@@ -33,23 +102,32 @@ public class SoldierMovementManager : MonoBehaviour
         }
     }
 
+    private bool IsTimeToMoveForward()
+    {
+        return Time.timeSinceLevelLoad - _lastMovementTime >= 0.5;
+    }
+
+    private void MoveToPosition(Vector2 position)
+    {
+        transform.position = new Vector3((float) Math.Floor(position.x) + CenterOffset,
+            (float) Math.Floor(position.y) + CenterOffset, 0);
+    }
+
     private void SelectBlocks()
     {
         DeselectAllPreviouslySelectedBlocks();
         _previouslySelectedBlocks = new List<GameObject>();
 
         var battleFieldManager = BattleFieldManagerObject.GetComponent<BattleFieldManager>();
-        var battleFieldBlocks = battleFieldManager.BattleFieldBlocks;
-        var djikstra = new SoldierMovementGameFieldPathFinding(_soldier, battleFieldManager.BattleField,
-            battleFieldManager.BattleFieldBlocks);
+        var djikstra = MakeNewPathFinder();
 
         var paths = djikstra.GetReachablePaths();
 
         foreach (var tuple in paths)
         {
-            var blockPosition = tuple.Item1;
+            var blockPosition = tuple.Key;
             var block = battleFieldManager.BattleFieldBlocks[blockPosition.x, blockPosition.y];
-            if (DistanceOfPath(tuple.Item2) > _soldier.IntermediateWalkingDistance)
+            if (DistanceOfPath(tuple.Value) > IntermediateWalkingDistance)
             {
                 block.GetComponent<BattleFieldBlock>().State = BattleFieldBlock.DistanceState.FarDistance;
             }
@@ -80,5 +158,19 @@ public class SoldierMovementManager : MonoBehaviour
         }
 
         _previouslySelectedBlocks = null;
+    }
+
+    private void NotifyFinishedMoving()
+    {
+        var battleFieldManager = BattleFieldManagerObject.GetComponent<BattleFieldManager>();
+        battleFieldManager.PlayerStateMachine.GetComponent<PlayerGameStateMachine>()
+            .HandleEvent(new SoldierFinishedMovementEvent());
+    }
+
+    public SoldierMovementGameFieldPathFinding MakeNewPathFinder()
+    {
+        var battleFieldManager = BattleFieldManagerObject.GetComponent<BattleFieldManager>();
+        return new SoldierMovementGameFieldPathFinding(this, battleFieldManager.BattleField,
+            battleFieldManager.BattleFieldBlocks);
     }
 }

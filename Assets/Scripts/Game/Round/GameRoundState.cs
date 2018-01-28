@@ -2,6 +2,6 @@
 {
     public enum GameRoundState
     {
-        Idle, SoldierSelected, SoldierAttack, SoldierMovement, Finished
+        Idle, SoldierSelected, SoldierAttack, SoldierMovement, Finished, SoldierMoving
     }
 }

@@ -10,26 +10,32 @@ namespace PathFinding
 {
     public class SoldierMovementGameFieldPathFinding
     {
-        private Soldier _soldier;
+        private SoldierMovementManager _soldierMovementManager;
         private GameObject[,] _battleFieldObjects;
         private GameObject[,] _battleFieldBlocks;
 
         private Vector2Int SoldierPosition
         {
-            get { return new Vector2Int((int) _soldier.transform.position.x, (int) _soldier.transform.position.y); }
+            get
+            {
+                return new Vector2Int((int) _soldierMovementManager.transform.position.x,
+                    (int) _soldierMovementManager.transform.position.y);
+            }
         }
 
-        public SoldierMovementGameFieldPathFinding(Soldier soldier, GameObject[,] battleFieldObjects, GameObject[,] battleFieldBlocksBlocks)
+        public SoldierMovementGameFieldPathFinding(SoldierMovementManager soldierMovementManager,
+            GameObject[,] battleFieldObjects,
+            GameObject[,] battleFieldBlocksBlocks)
         {
-            _soldier = soldier;
+            _soldierMovementManager = soldierMovementManager;
             _battleFieldObjects = battleFieldObjects;
             _battleFieldBlocks = battleFieldBlocksBlocks;
         }
 
-        public List<Utility.Tuple.Tuple<Vector2Int, Vector2Int[]>> GetReachablePaths()
+        public Dictionary<Vector2Int, Vector2Int[]> GetReachablePaths()
         {
             var source = SoldierPosition;
-            var availablePaths = new List<Utility.Tuple.Tuple<Vector2Int, Vector2Int[]>>();
+            var availablePaths = new Dictionary<Vector2Int, Vector2Int[]>();
 
             var bounds = GetFixedLowerAndUpperPositionsOfSoldier();
             var minPoint = bounds.Item1;
@@ -81,8 +87,8 @@ namespace PathFinding
                 var path = CalculatePathToNode(inspectedNode, prev);
                 if (path != null)
                 {
-                    availablePaths.Add(
-                        new Utility.Tuple.Tuple<Vector2Int, Vector2Int[]>(inspectedNode, path.ToArray()));
+                    path.Add(inspectedNode);
+                    availablePaths.Add(inspectedNode, path.ToArray());
                 }
             }
 
@@ -165,22 +171,22 @@ namespace PathFinding
         {
             var fieldBlock = _battleFieldBlocks[node1.x, node1.y].GetComponent<BattleFieldBlock>();
             var delta = node1 - node2;
-            
+
             if (delta.x < 0 && fieldBlock.HasLeftWall)
             {
                 return true;
             }
-            
+
             if (delta.x > 0 && fieldBlock.HasRightWall)
             {
                 return true;
             }
-            
+
             if (delta.y < 0 && fieldBlock.HasBottomWall)
             {
                 return true;
             }
-            
+
             if (delta.y > 0 && fieldBlock.HasTopWall)
             {
                 return true;
@@ -195,8 +201,7 @@ namespace PathFinding
             {
                 return false;
             }
-            
-            
+
             // Only true if there is no other object at the given position
             return _battleFieldObjects[position.x, position.y] == null || position == SoldierPosition;
         }
@@ -214,7 +219,7 @@ namespace PathFinding
 
         private bool IsInsideWalkingRadius(Vector2Int point)
         {
-            var radius = _soldier.FarWalkingDistance;
+            var radius = _soldierMovementManager.FarWalkingDistance;
             var center = SoldierPosition;
             return Math.Pow(point.x - center.x, 2) + Math.Pow(point.y - center.y, 2) < Math.Pow(radius, 2);
         }
@@ -222,8 +227,8 @@ namespace PathFinding
         private Utility.Tuple.Tuple<Vector2Int, Vector2Int> GetFixedLowerAndUpperPositionsOfSoldier()
         {
             // calculate bounds (only inspect areas that are possibly reachable)
-            var minPoint = _soldier.MinWalkingPoint; // Soldier will take care of checking if x||y < 0
-            var maxPoint = _soldier.MaxWalkingPoint;
+            var minPoint = _soldierMovementManager.MinWalkingPoint; // Soldier will take care of checking if x||y < 0
+            var maxPoint = _soldierMovementManager.MaxWalkingPoint;
 
             if (maxPoint.x >= _battleFieldBlocks.GetLength(0))
             {

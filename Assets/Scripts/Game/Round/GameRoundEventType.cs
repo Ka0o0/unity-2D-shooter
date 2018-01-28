@@ -5,6 +5,7 @@
         MovingModeStarted,
         ShootingModeStarted,
         FieldSelected,
-        FinishRound
+        FinishRound,
+        SoldierFinishedMovement
     }
 }
