@@ -1924,6 +1924,10 @@ MonoBehaviour:
   PlayerStateMachine: {fileID: 1546219001}
   BattleFieldBlockPrefab: {fileID: 1521545882219574, guid: bbc7d41c909074e46b118cc4c48c9339,
     type: 2}
+  AllSingsOnSeBattlefield:
+  - {fileID: 347652514}
+  - {fileID: 1048207800}
+  - {fileID: 455475384}
 --- !u!1 &1679868446
 GameObject:
   m_ObjectHideFlags: 0
