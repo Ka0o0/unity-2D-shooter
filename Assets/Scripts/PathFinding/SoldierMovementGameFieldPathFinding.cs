@@ -170,7 +170,7 @@ namespace PathFinding
         private bool NodesBlockedByWall(Vector2Int node1, Vector2Int node2)
         {
             var fieldBlock = _battleFieldBlocks[node1.x, node1.y].GetComponent<BattleFieldBlock>();
-            var delta = node1 - node2;
+            var delta = node2 - node1;
 
             if (delta.x < 0 && fieldBlock.HasLeftWall)
             {
