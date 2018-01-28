@@ -14,7 +14,6 @@ public class Destroyable : MonoBehaviour
         var otherGameObject = other.gameObject;
         if (otherGameObject.CompareTag("Bullet"))
         {
-            Destroy(otherGameObject);
             HitByBullet(otherGameObject.GetComponent<Bullet>());
         }
     }

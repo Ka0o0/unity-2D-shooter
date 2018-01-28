@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Linq;
+using System.Xml.Schema;
+using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
@@ -29,9 +32,10 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         var otherGameObject = other.gameObject;
-
-        if (otherGameObject.CompareTag("Obstacle"))
+        var tags = new[] {"Obstacle", "Player"};
+        if (tags.Any(tagToMatch => otherGameObject.CompareTag(tagToMatch)))
         {
+            gameObject.GetComponent<AudioSource>().Play();
             Destroy(gameObject);
         }
     }
