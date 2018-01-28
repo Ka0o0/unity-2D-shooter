@@ -15,23 +15,9 @@ namespace Game.Round
         }
     }
 
-    public class SoldierSelectedGameRoundEvent: GameRoundEvent
+    public class FieldSelectedGameRoundEvent: GameRoundEvent
     {
-        public SoldierSelectedGameRoundEvent(Soldier payload) : base(GameRoundEventType.SoldierSelected, payload)
-        {
-        }
-    }
-    
-    public class EmptyFieldSelectedGameRoundEvent: GameRoundEvent
-    {
-        public EmptyFieldSelectedGameRoundEvent(Vector2 payload) : base(GameRoundEventType.EmptyFieldSelected, payload)
-        {
-        }
-    }
-
-    public class EnemySelectedGameRoundeEvent : GameRoundEvent
-    {
-        public EnemySelectedGameRoundeEvent(Soldier payload) : base(GameRoundEventType.EnemySelected, payload)
+        public FieldSelectedGameRoundEvent(Vector2 payload) : base(GameRoundEventType.FieldSelected, payload)
         {
         }
     }

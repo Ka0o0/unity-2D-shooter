@@ -4,11 +4,27 @@ using UnityEngine;
 
 namespace Game
 {
-    public class PlayerGameStateMachine: MonoBehaviour
+    public class PlayerGameStateMachine : MonoBehaviour
     {
         private PlayerGameState State;
         public GameRoundStateMachine GameRoundStateMachine;
         public List<GameObject> Soldiers;
+
+        private GameObject[,] _battlefield;
+
+        public GameObject[,] Battlefield
+        {
+            private get { return _battlefield; }
+            set
+            {
+                if (GameRoundStateMachine != null)
+                {
+                    GameRoundStateMachine.Battlefield = value;
+                }
+
+                _battlefield = value;
+            }
+        }
 
         private void Start()
         {
@@ -19,23 +35,7 @@ namespace Game
 
         public void HandleEvent(GameRoundEvent gameEvent)
         {
-            if (gameEvent.Type == GameRoundEventType.SoldierSelected)
-            {
-                var soldier = gameEvent.Payload as Soldier;
-
-                if (IsSoldierEnemy(soldier))
-                {
-                    GameRoundStateMachine.HandleEvent(new EnemySelectedGameRoundeEvent(soldier));
-                }
-                else
-                {
-                    GameRoundStateMachine.HandleEvent(gameEvent);
-                }
-            }
-            else
-            {
-                GameRoundStateMachine.HandleEvent(gameEvent);
-            }
+            GameRoundStateMachine.HandleEvent(gameEvent);
 
             if (GameRoundStateMachine.RoundState == GameRoundState.Finished)
             {
@@ -47,6 +47,7 @@ namespace Game
         private void CreateNewGameRoundStateMachine()
         {
             GameRoundStateMachine = new GameRoundStateMachine();
+            GameRoundStateMachine.Battlefield = Battlefield;
         }
 
         private void SwapState()

@@ -19,6 +19,7 @@
           <e p="Camera" t="Include">
             <e p="TouchCamera.cs" t="Include" />
           </e>
+          <e p="Destroyable.cs" t="Include" />
           <e p="Game" t="Include">
             <e p="PlayerGameState.cs" t="Include" />
             <e p="PlayerGameStateMachine.cs" t="Include" />
