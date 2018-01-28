@@ -1432,6 +1432,16 @@ Prefab:
       propertyPath: m_Name
       value: SoldierBob
       objectReference: {fileID: 0}
+    - target: {fileID: 114279872267145782, guid: ade7e2330fafe45b08187563d2d3bd86,
+        type: 2}
+      propertyPath: IntermediateWalkingDistance
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114279872267145782, guid: ade7e2330fafe45b08187563d2d3bd86,
+        type: 2}
+      propertyPath: FarWalkingDistance
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ade7e2330fafe45b08187563d2d3bd86, type: 2}
   m_IsPrefabParent: 0
@@ -2669,6 +2679,16 @@ Prefab:
         type: 2}
       propertyPath: Team
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114279872267145782, guid: ade7e2330fafe45b08187563d2d3bd86,
+        type: 2}
+      propertyPath: IntermediateWalkingDistance
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114279872267145782, guid: ade7e2330fafe45b08187563d2d3bd86,
+        type: 2}
+      propertyPath: FarWalkingDistance
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ade7e2330fafe45b08187563d2d3bd86, type: 2}

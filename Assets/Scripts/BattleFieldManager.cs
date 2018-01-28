@@ -12,6 +12,7 @@ public class BattleFieldManager : MonoBehaviour
     public GameObject BattleFieldBlockPrefab;
     public GameObject[,] BattleFieldBlocks;
     public List<GameObject> AllSingsOnSeBattlefield;
+    public GameObject[,] BattleField;
 
     private void Start()
     {
@@ -28,16 +29,16 @@ public class BattleFieldManager : MonoBehaviour
             }
         }
 
-        var battleField = new GameObject[GameFieldWidth, GameFieldHeight];
+        BattleField = new GameObject[GameFieldWidth, GameFieldHeight];
 
         AllSingsOnSeBattlefield.ForEach(element =>
         {
             var x = (int) element.transform.position.x;
             var y = (int) element.transform.position.y;
-            battleField[x, y] = element;
+            BattleField[x, y] = element;
         });
 
-        PlayerStateMachine.GetComponent<PlayerGameStateMachine>().Battlefield = battleField;
+        PlayerStateMachine.GetComponent<PlayerGameStateMachine>().Battlefield = BattleField;
     }
 
 

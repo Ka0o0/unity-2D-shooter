@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using PathFinding;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 public class SoldierMovementManager : MonoBehaviour
 {
-    public float IntermediateWalkingDistance;
-    public float FarWalkingDistance;
     public GameObject BattleFieldManagerObject;
 
     private Soldier _soldier;
@@ -17,15 +16,16 @@ public class SoldierMovementManager : MonoBehaviour
     private void Start()
     {
         _soldier = GetComponent<Soldier>();
-
-        Assert.IsTrue(IntermediateWalkingDistance < FarWalkingDistance);
     }
 
     private void Update()
     {
         if (_soldier.IsSelected)
         {
-            SelectBlocks();
+            if (_previouslySelectedBlocks == null)
+            {
+                SelectBlocks();
+            }
         }
         else
         {
@@ -38,68 +38,31 @@ public class SoldierMovementManager : MonoBehaviour
         DeselectAllPreviouslySelectedBlocks();
         _previouslySelectedBlocks = new List<GameObject>();
 
-        var intermediateBlocks = GetIntermediateDistanceBlocks();
-        var farDistanceBlocks = GetFarDistanceBlocks();
+        var battleFieldManager = BattleFieldManagerObject.GetComponent<BattleFieldManager>();
+        var battleField = battleFieldManager.BattleField;
+        var djikstra = new SoldierMovementGameFieldPathFinding(_soldier, battleField);
 
-        foreach (var farDistanceBlock in farDistanceBlocks)
+        var paths = djikstra.GetReachablePaths();
+
+        foreach (var tuple in paths)
         {
-            farDistanceBlock.GetComponent<BattleFieldBlockManager>().State =
-                BattleFieldBlockManager.DistanceState.FAR_DISTANCE;
-            _previouslySelectedBlocks.Add(farDistanceBlock);
-        }
-
-        foreach (var intermediateBlock in intermediateBlocks)
-        {
-            intermediateBlock.GetComponent<BattleFieldBlockManager>().State =
-                BattleFieldBlockManager.DistanceState.INTERMEDIATE_DISTANCE;
-            _previouslySelectedBlocks.Add(intermediateBlock);
-        }
-    }
-
-    private GameObject[] GetIntermediateDistanceBlocks()
-    {
-        return GetBlockAroundPlayerWithinRadius((int) IntermediateWalkingDistance);
-    }
-
-    private GameObject[] GetFarDistanceBlocks()
-    {
-        return GetBlockAroundPlayerWithinRadius((int) FarWalkingDistance);
-    }
-
-    private GameObject[] GetBlockAroundPlayerWithinRadius(int radius)
-    {
-        var currentPosition = new Vector2Int(
-            (int) transform.position.x,
-            (int) transform.position.y
-        );
-        var fieldBlocks = BattleFieldManagerObject.GetComponent<BattleFieldManager>().BattleFieldBlocks;
-        var fieldsInRange = new List<GameObject>();
-
-        for (var i = currentPosition.x - radius; i < currentPosition.x + radius; i++)
-        {
-            for (var j = currentPosition.y - radius; j < currentPosition.y + radius; j++)
+            var blockPosition = tuple.Item1;
+            var block = battleFieldManager.BattleFieldBlocks[blockPosition.x, blockPosition.y];
+            if (DistanceOfPath(tuple.Item2) > _soldier.IntermediateWalkingDistance)
             {
-                if (i < 0 || j < 0 || i >= fieldBlocks.GetLength(0) || j >= fieldBlocks.GetLength(1))
-                {
-                    continue;
-                }
-
-                if (!PointIsInsideRadius(new Vector2Int(i, j), currentPosition, radius))
-                {
-                    continue;
-                }
-
-
-                fieldsInRange.Add(fieldBlocks[i,j]);
+                block.GetComponent<BattleFieldBlock>().State = BattleFieldBlock.DistanceState.FAR_DISTANCE;
             }
+            else
+            {
+                block.GetComponent<BattleFieldBlock>().State = BattleFieldBlock.DistanceState.INTERMEDIATE_DISTANCE;
+            }
+            _previouslySelectedBlocks.Add(block);
         }
-
-        return fieldsInRange.ToArray();
     }
 
-    private bool PointIsInsideRadius(Vector2Int point, Vector2Int center, int radius)
+    private int DistanceOfPath(Vector2Int[] tupleItem2)
     {
-        return Math.Pow(point.x - center.x, 2) + Math.Pow(point.y - center.y, 2) < Math.Pow(radius, 2);
+        return tupleItem2.Length;
     }
 
     private void DeselectAllPreviouslySelectedBlocks()
@@ -111,8 +74,8 @@ public class SoldierMovementManager : MonoBehaviour
 
         foreach (var previouslySelectedBlock in _previouslySelectedBlocks)
         {
-            previouslySelectedBlock.GetComponent<BattleFieldBlockManager>().State =
-                BattleFieldBlockManager.DistanceState.DEFAULT;
+            previouslySelectedBlock.GetComponent<BattleFieldBlock>().State =
+                BattleFieldBlock.DistanceState.DEFAULT;
         }
 
         _previouslySelectedBlocks = null;
