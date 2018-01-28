@@ -2,7 +2,7 @@
 
 public class Bullet : MonoBehaviour
 {
-    public double Damage;
+    public float Damage;
     public int Speed;
     public float MaxTravelDistance;
 

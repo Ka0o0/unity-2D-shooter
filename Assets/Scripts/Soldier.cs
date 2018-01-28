@@ -7,7 +7,7 @@ using UnityEngine;
 public class Soldier : MonoBehaviour
 {
     public Team Team;
-    public double HealthPoints = 100;
+    public float HealthPoints = 100;
     public int MaxShootingsCount = 1;
     public GameObject BulletPrefab;
     public String Name;
@@ -15,6 +15,7 @@ public class Soldier : MonoBehaviour
     public bool IsTeamActive { get; set; }
 
     private float CenterOffset = (float) 0.5;
+    private HealthBarHelper _healthBarHelper;
 
     public bool CanMoveToPosition(Vector2 position)
     {
@@ -24,7 +25,8 @@ public class Soldier : MonoBehaviour
 
     public void MoveToPosition(Vector2 position)
     {
-        transform.position = new Vector3((float) Math.Floor(position.x) + CenterOffset, (float) Math.Floor(position.y) + CenterOffset, 0);
+        transform.position = new Vector3((float) Math.Floor(position.x) + CenterOffset,
+            (float) Math.Floor(position.y) + CenterOffset, 0);
     }
 
     public void ShootToPoint(Vector2 point)
@@ -37,7 +39,7 @@ public class Soldier : MonoBehaviour
         bullet.transform.Rotate(0, 0, deg);
         bullet.GetComponent<Bullet>().StartMove();
     }
-    
+
     // MARK: Private
 
     private Boolean IsDead
@@ -47,6 +49,7 @@ public class Soldier : MonoBehaviour
 
     private void Start()
     {
+        _healthBarHelper = GetComponentInChildren<HealthBarHelper>();
     }
 
     private void FixedUpdate()
@@ -57,6 +60,9 @@ public class Soldier : MonoBehaviour
     {
         GetComponent<Animator>().SetBool("IsSelected", IsSelected);
         GetComponent<Animator>().SetBool("IsTeamActive", IsTeamActive);
+
+        _healthBarHelper.CurrentHpPercentage = HealthPoints;
+        _healthBarHelper.gameObject.SetActive(IsTeamActive);
     }
 
     private void OnTriggerEnter2D(Collider2D other)

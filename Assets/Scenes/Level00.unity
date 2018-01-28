@@ -263,7 +263,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 103780448}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 300, y: 175.41586, z: 0}
+  m_LocalPosition: {x: 300, y: 126.907486, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 293495060}
@@ -496,8 +496,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 236232602}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1034, y: 531, z: 0}
-  m_LocalScale: {x: 2.585, y: 2.585, z: 2.585}
+  m_LocalPosition: {x: 789, y: 309.5, z: 0}
+  m_LocalScale: {x: 1.9725, y: 1.9725, z: 1.9725}
   m_Children:
   - {fileID: 103780449}
   - {fileID: 2110308871}
@@ -862,8 +862,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 518041251}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1034, y: 531, z: 0}
-  m_LocalScale: {x: 2.585, y: 2.585, z: 2.585}
+  m_LocalPosition: {x: 789, y: 309.5, z: 0}
+  m_LocalScale: {x: 1.9725, y: 1.9725, z: 1.9725}
   m_Children:
   - {fileID: 1950107578}
   - {fileID: 1779652146}
@@ -1114,28 +1114,6 @@ Prefab:
       propertyPath: m_Name
       value: SoldierBob
       objectReference: {fileID: 0}
-    - target: {fileID: 114279872267145782, guid: ade7e2330fafe45b08187563d2d3bd86,
-        type: 2}
-      propertyPath: Team
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114279872267145782, guid: ade7e2330fafe45b08187563d2d3bd86,
-        type: 2}
-      propertyPath: BulletPrefab
-      value: 
-      objectReference: {fileID: 1143126175694020, guid: 9b079d254b58f4c8ba7461c25544ba48,
-        type: 2}
-    - target: {fileID: 114279872267145782, guid: ade7e2330fafe45b08187563d2d3bd86,
-        type: 2}
-      propertyPath: Name
-      value: Bob
-      objectReference: {fileID: 0}
-    - target: {fileID: 95789997337421596, guid: ade7e2330fafe45b08187563d2d3bd86,
-        type: 2}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 22100000, guid: ea09a140d6d764fff802e67a70d2d25f,
-        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ade7e2330fafe45b08187563d2d3bd86, type: 2}
   m_IsPrefabParent: 0
@@ -1267,7 +1245,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1142799960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1332,8 +1310,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1142799959}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1034, y: 531, z: 0}
-  m_LocalScale: {x: 2.585, y: 2.585, z: 2.585}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 831953646}
   - {fileID: 1909461579}
@@ -1656,7 +1634,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1779652145}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -100, y: 175.41586, z: 0}
+  m_LocalPosition: {x: -100, y: 126.907486, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 34196902}
@@ -1974,7 +1952,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1950107577}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -300, y: 175.41586, z: 0}
+  m_LocalPosition: {x: -300, y: 126.907486, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1873963355}
@@ -2225,12 +2203,6 @@ Prefab:
       propertyPath: m_Name
       value: SoldierAlice
       objectReference: {fileID: 0}
-    - target: {fileID: 95544889113462462, guid: ade7e2330fafe45b08187563d2d3bd86,
-        type: 2}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 22100000, guid: ea09a140d6d764fff802e67a70d2d25f,
-        type: 2}
     - target: {fileID: 114279872267145782, guid: ade7e2330fafe45b08187563d2d3bd86,
         type: 2}
       propertyPath: Team
@@ -2340,7 +2312,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2110308870}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -300, y: 175.41586, z: 0}
+  m_LocalPosition: {x: -300, y: 126.907486, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 407926159}
