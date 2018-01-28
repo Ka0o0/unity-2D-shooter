@@ -13,6 +13,11 @@ public class BattleFieldBlock : MonoBehaviour
         OutOfReach
     }
 
+    public bool HasTopWall = false;
+    public bool HasLeftWall = false;
+    public bool HasRightWall = false;
+    public bool HasBottomWall = false;
+
     public Sprite DefaultTileSprite;
     public Sprite IntermediateDistanceSprite;
     public Sprite FarDistanceSprite;
