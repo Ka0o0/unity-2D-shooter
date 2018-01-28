@@ -1,5 +1,7 @@
-﻿using Game;
+﻿using System.Collections.Generic;
+using Game;
 using Game.Round;
+using UnityEditor;
 using UnityEngine;
 
 public class BattleFieldManager : MonoBehaviour
@@ -7,6 +9,26 @@ public class BattleFieldManager : MonoBehaviour
     public int GameFieldWidth = 10;
     public int GameFieldHeight = 10;
     public GameObject PlayerStateMachine;
+    public GameObject BattleFieldBlockPrefab;
+
+    public GameObject[][] BattleFieldBlocks;
+
+    private void Start()
+    {
+        BattleFieldBlocks = new GameObject[GameFieldWidth][];
+        for (int i = 0; i < GameFieldWidth; i++)
+        {
+            BattleFieldBlocks[i] = new GameObject[GameFieldHeight];
+            for (int j = 0; j < GameFieldHeight; j++)
+            {
+                var block = Instantiate(BattleFieldBlockPrefab);
+                var x = i + (float) 0.5; // Offset
+                var y = j + (float) 0.5;
+                block.transform.position = new Vector3(x, y, 0);
+                BattleFieldBlocks[i][j] = block;
+            }
+        }
+    }
 
     private void Update()
     {

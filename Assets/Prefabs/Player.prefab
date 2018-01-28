@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 58623435975313576}
   - component: {fileID: 114279872267145782}
   - component: {fileID: 95544889113462462}
+  - component: {fileID: 114898017803954612}
   m_Layer: 11
   m_Name: Player
   m_TagString: Player
@@ -70,7 +71,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1364321532894472}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0.5, z: 0}
+  m_LocalPosition: {x: 9.5, y: 9.5, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_Children:
   - {fileID: 4388459838950502}
@@ -183,7 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba016420089ff4d93a751f8dff709f1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Team: 0
+  Team: 1
   HealthPoints: 100
   MaxShootingsCount: 1
   BulletPrefab: {fileID: 1143126175694020, guid: 9b079d254b58f4c8ba7461c25544ba48,
@@ -205,6 +206,20 @@ MonoBehaviour:
   ThreeQuaterSprite: {fileID: 21300000, guid: 88dd29fabba2944f0b0890049a8332dd, type: 3}
   HalfSprite: {fileID: 21300000, guid: 5df559df892b241aab9ae3ea283276d8, type: 3}
   OneQuaterSprite: {fileID: 21300000, guid: 4167e8b7c76e74efb870f7f576c5da1c, type: 3}
+--- !u!114 &114898017803954612
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1364321532894472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061e0d8bf0ff943d5930e01740cbfb9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IntermediateWalkingDistance: 3
+  FarWalkingDistance: 5
+  BattleFieldManagerObject: {fileID: 0}
 --- !u!212 &212010575700202378
 SpriteRenderer:
   m_ObjectHideFlags: 1
