@@ -33,7 +33,7 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         var otherGameObject = other.gameObject;
-        var tags = new[] {"Obstacle", "Player"};
+        var tags = new[] {"Obstacle", "Player", "Wall"};
         if (tags.Any(tagToMatch => otherGameObject.CompareTag(tagToMatch)))
         {
             if (ExplosionSound)

@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Game;
 using Game.Round;
+using NUnit.Framework.Internal;
 using UnityEditor;
 using UnityEngine;
 
@@ -29,14 +32,49 @@ public class BattleFieldManager : MonoBehaviour
             }
         }
 
-        BattleField = new GameObject[GameFieldWidth, GameFieldHeight];
+        AllSingsOnSeBattlefield.Where(sing => sing.CompareTag("Wall"))
+            .ToList()
+            .ForEach(wall =>
+            {
+                var wallRenderer = wall.GetComponent<SpriteRenderer>();
+                var bounds = wallRenderer.bounds;
 
-        AllSingsOnSeBattlefield.ForEach(element =>
-        {
-            var x = (int) element.transform.position.x;
-            var y = (int) element.transform.position.y;
-            BattleField[x, y] = element;
-        });
+                if (bounds.size.x > bounds.size.y)
+                {
+                    var hLine = (int) Math.Round(bounds.center.y);
+                    var start = (int) Math.Ceiling(bounds.min.x);
+                    var end = (int) Math.Floor(bounds.max.x);
+
+                    for (var i = start; i < end; i++)
+                    {
+                        BattleFieldBlocks[i, hLine - 1].GetComponent<BattleFieldBlock>().HasTopWall = true;
+                        BattleFieldBlocks[i, hLine].GetComponent<BattleFieldBlock>().HasBottomWall = true;
+                    }
+                }
+                else
+                {
+                    var vLine = (int) Math.Round(bounds.center.x);
+                    var start = (int) Math.Ceiling(bounds.min.y);
+                    var end = (int) Math.Floor(bounds.max.y);
+
+                    for (var i = start; i < end; i++)
+                    {
+                        BattleFieldBlocks[vLine - 1, i].GetComponent<BattleFieldBlock>().HasRightWall = true;
+                        BattleFieldBlocks[vLine, i].GetComponent<BattleFieldBlock>().HasLeftWall = true;
+                    }
+                }
+            });
+
+        BattleField = new GameObject[GameFieldWidth, GameFieldHeight];
+        var tags = new[] {"Player", "Obstacle"};
+        AllSingsOnSeBattlefield.Where(sing => tags.Any(sing.CompareTag))
+            .ToList()
+            .ForEach(element =>
+            {
+                var x = (int) element.transform.position.x;
+                var y = (int) element.transform.position.y;
+                BattleField[x, y] = element;
+            });
 
         PlayerStateMachine.GetComponent<PlayerGameStateMachine>().Battlefield = BattleField;
     }
