@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Game;
 using Game.Round;
-using NUnit.Framework.Internal;
-using UnityEditor;
 using UnityEngine;
 
 public class BattleFieldManager : MonoBehaviour

@@ -1,6 +1,4 @@
-﻿using NUnit.Framework.Constraints;
-
-namespace Game.Round.GameStateObserver
+﻿namespace Game.Round.GameStateObserver
 {
     public class SoldierSelector
     {

@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Runtime;
-using JetBrains.Annotations;
-using NUnit.Framework.Constraints;
 using UnityEngine;
+using Utility.Tuple;
 
 namespace PathFinding
 {
@@ -228,7 +225,7 @@ namespace PathFinding
             return Math.Pow(point.x - center.x, 2) + Math.Pow(point.y - center.y, 2) < Math.Pow(radius, 2);
         }
 
-        private Utility.Tuple.Tuple<Vector2Int, Vector2Int> GetFixedLowerAndUpperPositionsOfSoldier()
+        private Tuple<Vector2Int, Vector2Int> GetFixedLowerAndUpperPositionsOfSoldier()
         {
             // calculate bounds (only inspect areas that are possibly reachable)
             var minPoint = _soldierMovementManager.MinWalkingPoint; // Soldier will take care of checking if x||y < 0
@@ -244,7 +241,7 @@ namespace PathFinding
                 maxPoint.y = _battleFieldBlocks.GetLength(1) - 1;
             }
 
-            return new Utility.Tuple.Tuple<Vector2Int, Vector2Int>(minPoint, maxPoint);
+            return new Tuple<Vector2Int, Vector2Int>(minPoint, maxPoint);
         }
     }
 }

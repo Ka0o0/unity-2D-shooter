@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Game.Round;
 using UnityEngine;
 
@@ -46,8 +47,11 @@ namespace Game
 
         private void CreateNewGameRoundStateMachine()
         {
-            GameRoundStateMachine = new GameRoundStateMachine();
-            GameRoundStateMachine.Battlefield = Battlefield;
+            GameRoundStateMachine = new GameRoundStateMachine
+            {
+                Battlefield = Battlefield,
+                OwnSoldiers = Soldiers.Where(s => !IsSoldierEnemy(s.GetComponent<Soldier>())).ToList()
+            };
         }
 
         private void SwapState()

@@ -27,6 +27,8 @@ namespace Game.Round
             }
         }
 
+        public List<GameObject> OwnSoldiers;
+
         private readonly StateMachineTransitionMap _stateMachineTransitionMap = new StateMachineTransitionMap();
         private readonly StateMachineStateObserverList _stateChangeObservers = new StateMachineStateObserverList();
         private readonly SoldierMover _soldierMover = new SoldierMover();
@@ -110,7 +112,7 @@ namespace Game.Round
             if (!go) return GameRoundState.Idle;
 
             var soldier = go.GetComponent<Soldier>();
-            if (!soldier) return GameRoundState.Idle;
+            if (!soldier || !OwnSoldiers.Contains(go)) return GameRoundState.Idle;
 
             _soldierMover.SelectSoldier(soldier);
             _soldierShooter.SelectSoldier(soldier);
