@@ -40,9 +40,26 @@ GameObject:
   - component: {fileID: 58623435975313576}
   - component: {fileID: 114279872267145782}
   - component: {fileID: 95544889113462462}
+  - component: {fileID: 114898017803954612}
   m_Layer: 11
   m_Name: Player
   m_TagString: Player
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1971950819876574
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4388459838950502}
+  - component: {fileID: 108972000598475698}
+  m_Layer: 5
+  m_Name: Area Light
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -57,10 +74,24 @@ Transform:
   m_LocalPosition: {x: 9.5, y: 9.5, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_Children:
+  - {fileID: 4388459838950502}
   - {fileID: 4529805036308740}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4388459838950502
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1971950819876574}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -3}
+  m_LocalScale: {x: 9.8625, y: 9.8625, z: 1.9725}
+  m_Children: []
+  m_Father: {fileID: 4033040049033822}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!4 &4529805036308740
 Transform:
   m_ObjectHideFlags: 1
@@ -72,7 +103,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4033040049033822}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &58623435975313576
 CircleCollider2D:
@@ -106,6 +137,42 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!108 &108972000598475698
+Light:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1971950819876574}
+  m_Enabled: 1
+  serializedVersion: 8
+  m_Type: 2
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 1
+  m_Range: 100
+  m_SpotAngle: 51.7
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 4
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
 --- !u!114 &114279872267145782
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -135,11 +202,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentHpPercentage: 100
-  Shown: 1
   FullSprite: {fileID: 21300000, guid: b470be062f229479a8e76b04b563f84b, type: 3}
   ThreeQuaterSprite: {fileID: 21300000, guid: 88dd29fabba2944f0b0890049a8332dd, type: 3}
   HalfSprite: {fileID: 21300000, guid: 5df559df892b241aab9ae3ea283276d8, type: 3}
   OneQuaterSprite: {fileID: 21300000, guid: 4167e8b7c76e74efb870f7f576c5da1c, type: 3}
+--- !u!114 &114898017803954612
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1364321532894472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061e0d8bf0ff943d5930e01740cbfb9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IntermediateWalkingDistance: 3
+  FarWalkingDistance: 5
+  BattleFieldManagerObject: {fileID: 0}
 --- !u!212 &212010575700202378
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -198,7 +278,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: b06171161039b4c4cb7889f3001fbbe7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -218,7 +298,7 @@ SpriteRenderer:
   m_SortingLayerID: 635893771
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 312e5c1358aee4bb99298d4268736541, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7209ec3570b8a476d831d47f104b349c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

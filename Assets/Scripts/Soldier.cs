@@ -12,6 +12,7 @@ public class Soldier : Destroyable
 
     private float CenterOffset = (float) 0.5;
     private HealthBarHelper _healthBarHelper;
+    private Light _soldierLight;
 
     public bool CanMoveToPosition(Vector2 position)
     {
@@ -41,6 +42,7 @@ public class Soldier : Destroyable
     private void Start()
     {
         _healthBarHelper = GetComponentInChildren<HealthBarHelper>();
+        _soldierLight = GetComponentInChildren<Light>();
     }
 
     private void FixedUpdate()
@@ -54,5 +56,6 @@ public class Soldier : Destroyable
 
         _healthBarHelper.CurrentHpPercentage = HealthPoints;
         _healthBarHelper.gameObject.SetActive(IsTeamActive);
+        _soldierLight.gameObject.SetActive(IsTeamActive);
     }
 }

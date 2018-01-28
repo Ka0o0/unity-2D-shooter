@@ -1,17 +1,16 @@
-﻿namespace Game.Round.GameStateObserver
+﻿using NUnit.Framework.Constraints;
+
+namespace Game.Round.GameStateObserver
 {
     public class SoldierSelector
     {
 
         private Soldier _selectedSoldier;
 
-        public void SoldierSelected(GameRoundEvent _event)
+        public void SelectSoldier(Soldier _soldier)
         {
-            _selectedSoldier = _event.Payload as Soldier;
-            if (_selectedSoldier != null)
-            {
-                _selectedSoldier.IsSelected = true;
-            }
+            _selectedSoldier = _soldier;
+            _soldier.IsSelected = true;
         }
 
         public void Idling(GameRoundEvent _event)

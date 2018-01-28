@@ -31,6 +31,7 @@ namespace Game.Round
         private readonly StateMachineStateObserverList _stateChangeObservers = new StateMachineStateObserverList();
         private readonly SoldierMover _soldierMover = new SoldierMover();
         private readonly SoldierShooter _soldierShooter = new SoldierShooter();
+        private readonly SoldierSelector _soldierSelector = new SoldierSelector();
 
         public GameRoundStateMachine()
         {
@@ -65,13 +66,8 @@ namespace Game.Round
                 FinishRound);
 
             // Soldier Selection
-            var soldierSelector = new SoldierSelector();
             _stateChangeObservers.AddLast(
-                new Tuple<GameRoundState, System.Action<GameRoundEvent>>(GameRoundState.SoldierSelected,
-                    soldierSelector.SoldierSelected)
-            );
-            _stateChangeObservers.AddLast(
-                new Tuple<GameRoundState, System.Action<GameRoundEvent>>(GameRoundState.Idle, soldierSelector.Idling)
+                new Tuple<GameRoundState, System.Action<GameRoundEvent>>(GameRoundState.Idle, _soldierSelector.Idling)
             );
         }
 
@@ -113,6 +109,7 @@ namespace Game.Round
 
             _soldierMover.SelectSoldier(soldier);
             _soldierShooter.SelectSoldier(soldier);
+            _soldierSelector.SelectSoldier(soldier);
 
             return GameRoundState.SoldierSelected;
         }
