@@ -1166,6 +1166,16 @@ Prefab:
       propertyPath: m_Name
       value: SoldierBob
       objectReference: {fileID: 0}
+    - target: {fileID: 114279872267145782, guid: ade7e2330fafe45b08187563d2d3bd86,
+        type: 2}
+      propertyPath: IntermediateWalkingDistance
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114279872267145782, guid: ade7e2330fafe45b08187563d2d3bd86,
+        type: 2}
+      propertyPath: FarWalkingDistance
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ade7e2330fafe45b08187563d2d3bd86, type: 2}
   m_IsPrefabParent: 0
@@ -1536,6 +1546,10 @@ MonoBehaviour:
   PlayerStateMachine: {fileID: 1546219001}
   BattleFieldBlockPrefab: {fileID: 1521545882219574, guid: bbc7d41c909074e46b118cc4c48c9339,
     type: 2}
+  AllSingsOnSeBattlefield:
+  - {fileID: 347652514}
+  - {fileID: 1048207800}
+  - {fileID: 455475384}
 --- !u!1 &1679868446
 GameObject:
   m_ObjectHideFlags: 0
@@ -2277,6 +2291,16 @@ Prefab:
         type: 2}
       propertyPath: Team
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114279872267145782, guid: ade7e2330fafe45b08187563d2d3bd86,
+        type: 2}
+      propertyPath: IntermediateWalkingDistance
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114279872267145782, guid: ade7e2330fafe45b08187563d2d3bd86,
+        type: 2}
+      propertyPath: FarWalkingDistance
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ade7e2330fafe45b08187563d2d3bd86, type: 2}

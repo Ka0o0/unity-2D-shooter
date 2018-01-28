@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public class BattleFieldBlockManager : MonoBehaviour
+public class BattleFieldBlock : MonoBehaviour
 {
     public enum DistanceState
     {
