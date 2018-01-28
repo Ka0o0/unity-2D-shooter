@@ -76,6 +76,10 @@ namespace PathFinding
 
                     if (alternativePathsDistance < dist[neighbor.x, neighbor.y])
                     {
+                        if (alternativePathsDistance > _soldierMovementManager.FarWalkingDistance)
+                        {
+                            continue;
+                        }
                         prev[neighbor.x, neighbor.y] = item;
                         dist[neighbor.x, neighbor.y] = alternativePathsDistance;
                     }
