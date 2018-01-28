@@ -73,6 +73,8 @@ namespace Game
             {
                 var soldier = goSoldier.GetComponent<Soldier>();
                 soldier.IsTeamActive = !IsSoldierEnemy(soldier);
+                // Reset Walking Distance
+                soldier.MovementManager.WalkingDistanceInCurrentRound = 0;
             }
         }
     }

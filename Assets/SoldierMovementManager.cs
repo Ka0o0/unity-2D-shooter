@@ -14,6 +14,7 @@ public class SoldierMovementManager : MonoBehaviour
     public int FarWalkingDistance = 5;
     public bool ShowDistanceCircles { get; set; }
     public bool IsMoving { get; private set; }
+    public int WalkingDistanceInCurrentRound = 0;
 
     public Vector2Int MinWalkingPoint
     {
@@ -40,6 +41,16 @@ public class SoldierMovementManager : MonoBehaviour
         }
     }
 
+    public int RemainingIntermediateDistance
+    {
+        get { return IntermediateWalkingDistance - WalkingDistanceInCurrentRound; }
+    }
+
+    public int RemainingFarDistance
+    {
+        get { return FarWalkingDistance - WalkingDistanceInCurrentRound; }
+    }
+
     private List<GameObject> _previouslySelectedBlocks;
     private Vector2Int[] _movementPath;
     private int _currentPathPosition;
@@ -58,6 +69,7 @@ public class SoldierMovementManager : MonoBehaviour
         _targetPosition = position;
         _movementPath = path;
         IsMoving = true;
+        WalkingDistanceInCurrentRound += DistanceOfPath(path);
     }
 
     private void Start()
@@ -106,10 +118,9 @@ public class SoldierMovementManager : MonoBehaviour
         return Time.timeSinceLevelLoad - _lastMovementTime >= 0.5;
     }
 
-    private void MoveToPosition(Vector2 position)
+    private void MoveToPosition(Vector2Int position)
     {
-        transform.position = new Vector3((float) Math.Floor(position.x) + CenterOffset,
-            (float) Math.Floor(position.y) + CenterOffset, 0);
+        transform.position = new Vector3(position.x + CenterOffset, position.y + CenterOffset, 0);
     }
 
     private void SelectBlocks()
@@ -126,7 +137,7 @@ public class SoldierMovementManager : MonoBehaviour
         {
             var blockPosition = tuple.Key;
             var block = battleFieldManager.BattleFieldBlocks[blockPosition.x, blockPosition.y];
-            if (DistanceOfPath(tuple.Value) > IntermediateWalkingDistance)
+            if (DistanceOfPath(tuple.Value) > RemainingIntermediateDistance)
             {
                 block.GetComponent<BattleFieldBlock>().State = BattleFieldBlock.DistanceState.FarDistance;
             }
