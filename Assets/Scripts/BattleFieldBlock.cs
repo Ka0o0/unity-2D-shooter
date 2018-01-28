@@ -7,23 +7,23 @@ public class BattleFieldBlock : MonoBehaviour
 {
     public enum DistanceState
     {
-        DEFAULT,
-        INTERMEDIATE_DISTANCE,
-        FAR_DISTANCE,
-        OUT_OF_REACH
+        Default,
+        IntermediateDistance,
+        FarDistance,
+        OutOfReach
     }
 
     public Sprite DefaultTileSprite;
     public Sprite IntermediateDistanceSprite;
     public Sprite FarDistanceSprite;
 
-    public DistanceState State = DistanceState.DEFAULT;
+    public DistanceState State = DistanceState.Default;
 
     private SpriteRenderer _tileSpriteRenderer;
     private SpriteRenderer _backgroundSpriteRenderer;
 
     // Use this for initialization
-    void Start()
+    private void Start()
     {
         var spriteRenderer = GetComponentsInChildren<SpriteRenderer>();
         Assert.IsTrue(spriteRenderer.Length == 2);
@@ -46,14 +46,14 @@ public class BattleFieldBlock : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         switch (State)
         {
-            case DistanceState.FAR_DISTANCE:
+            case DistanceState.FarDistance:
                 _tileSpriteRenderer.sprite = FarDistanceSprite;
                 break;
-            case DistanceState.INTERMEDIATE_DISTANCE:
+            case DistanceState.IntermediateDistance:
                 _tileSpriteRenderer.sprite = IntermediateDistanceSprite;
                 break;
             default:

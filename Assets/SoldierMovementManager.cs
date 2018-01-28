@@ -50,11 +50,11 @@ public class SoldierMovementManager : MonoBehaviour
             var block = battleFieldManager.BattleFieldBlocks[blockPosition.x, blockPosition.y];
             if (DistanceOfPath(tuple.Item2) > _soldier.IntermediateWalkingDistance)
             {
-                block.GetComponent<BattleFieldBlock>().State = BattleFieldBlock.DistanceState.FAR_DISTANCE;
+                block.GetComponent<BattleFieldBlock>().State = BattleFieldBlock.DistanceState.FarDistance;
             }
             else
             {
-                block.GetComponent<BattleFieldBlock>().State = BattleFieldBlock.DistanceState.INTERMEDIATE_DISTANCE;
+                block.GetComponent<BattleFieldBlock>().State = BattleFieldBlock.DistanceState.IntermediateDistance;
             }
             _previouslySelectedBlocks.Add(block);
         }
@@ -75,7 +75,7 @@ public class SoldierMovementManager : MonoBehaviour
         foreach (var previouslySelectedBlock in _previouslySelectedBlocks)
         {
             previouslySelectedBlock.GetComponent<BattleFieldBlock>().State =
-                BattleFieldBlock.DistanceState.DEFAULT;
+                BattleFieldBlock.DistanceState.Default;
         }
 
         _previouslySelectedBlocks = null;
