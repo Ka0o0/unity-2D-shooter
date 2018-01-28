@@ -79,7 +79,7 @@ public class SoldierMovementManager : MonoBehaviour
         {
             for (var j = currentPosition.y - radius; j < currentPosition.y + radius; j++)
             {
-                if (i < 0 || j < 0 || i >= fieldBlocks.Length || j >= fieldBlocks[i].Length)
+                if (i < 0 || j < 0 || i >= fieldBlocks.GetLength(0) || j >= fieldBlocks.GetLength(1))
                 {
                     continue;
                 }
@@ -90,7 +90,7 @@ public class SoldierMovementManager : MonoBehaviour
                 }
 
 
-                fieldsInRange.Add(fieldBlocks[i][j]);
+                fieldsInRange.Add(fieldBlocks[i,j]);
             }
         }
 

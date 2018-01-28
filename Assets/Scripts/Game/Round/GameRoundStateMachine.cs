@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.Serialization.Formatters;
 using Game.Round.GameEventHandler;
 using Game.Round.GameStateObserver;
 using UnityEngine;
@@ -14,18 +15,30 @@ namespace Game.Round
     public class GameRoundStateMachine
     {
         public GameRoundState RoundState { get; private set; }
+        private GameObject[,] _battlefield;
+
+        public GameObject[,] Battlefield
+        {
+            private get { return _battlefield; }
+            set
+            {
+                _soldierMover.Battlefield = value;
+                _battlefield = value;
+            }
+        }
 
         private readonly StateMachineTransitionMap _stateMachineTransitionMap = new StateMachineTransitionMap();
         private readonly StateMachineStateObserverList _stateChangeObservers = new StateMachineStateObserverList();
         private readonly SoldierMover _soldierMover = new SoldierMover();
         private readonly SoldierShooter _soldierShooter = new SoldierShooter();
+        private readonly SoldierSelector _soldierSelector = new SoldierSelector();
 
         public GameRoundStateMachine()
         {
             RoundState = GameRoundState.Idle;
 
             _stateMachineTransitionMap.Add(
-                new Tuple<GameRoundState, GameRoundEventType>(GameRoundState.Idle, GameRoundEventType.SoldierSelected),
+                new Tuple<GameRoundState, GameRoundEventType>(GameRoundState.Idle, GameRoundEventType.FieldSelected),
                 SelectSoldier);
 
             // Movement
@@ -35,7 +48,7 @@ namespace Game.Round
                 _soldierMover.StartMovementSate);
             _stateMachineTransitionMap.Add(
                 new Tuple<GameRoundState, GameRoundEventType>(GameRoundState.SoldierMovement,
-                    GameRoundEventType.EmptyFieldSelected),
+                    GameRoundEventType.FieldSelected),
                 _soldierMover.MoveSoldier);
 
             // Shooting
@@ -45,7 +58,7 @@ namespace Game.Round
                 _soldierShooter.StartShootingState);
             _stateMachineTransitionMap.Add(
                 new Tuple<GameRoundState, GameRoundEventType>(GameRoundState.SoldierAttack,
-                    GameRoundEventType.EnemySelected),
+                    GameRoundEventType.FieldSelected),
                 _soldierShooter.ShootEnemy);
 
             _stateMachineTransitionMap.Add(
@@ -53,13 +66,8 @@ namespace Game.Round
                 FinishRound);
 
             // Soldier Selection
-            var soldierSelector = new SoldierSelector();
             _stateChangeObservers.AddLast(
-                new Tuple<GameRoundState, System.Action<GameRoundEvent>>(GameRoundState.SoldierSelected,
-                    soldierSelector.SoldierSelected)
-            );
-            _stateChangeObservers.AddLast(
-                new Tuple<GameRoundState, System.Action<GameRoundEvent>>(GameRoundState.Idle, soldierSelector.Idling)
+                new Tuple<GameRoundState, System.Action<GameRoundEvent>>(GameRoundState.Idle, _soldierSelector.Idling)
             );
         }
 
@@ -91,15 +99,19 @@ namespace Game.Round
 
         private GameRoundState SelectSoldier(GameRoundEvent gameRoundEvent)
         {
-            var soldier = gameRoundEvent.Payload as Soldier;
-            if (soldier)
-            {
-                _soldierMover.SelectSoldier(soldier);
-                _soldierShooter.SelectSoldier(soldier);
+            var position = (Vector2) gameRoundEvent.Payload;
 
-                return GameRoundState.SoldierSelected;
-            }
-            return GameRoundState.Idle;
+            var go = Battlefield[(int) position.x, (int) position.y];
+            if (!go) return GameRoundState.Idle;
+
+            var soldier = go.GetComponent<Soldier>();
+            if (!soldier) return GameRoundState.Idle;
+
+            _soldierMover.SelectSoldier(soldier);
+            _soldierShooter.SelectSoldier(soldier);
+            _soldierSelector.SelectSoldier(soldier);
+
+            return GameRoundState.SoldierSelected;
         }
     }
 }

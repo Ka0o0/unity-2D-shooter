@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Game;
 using UnityEngine;
 
-public class Soldier : MonoBehaviour
+public class Soldier : Destroyable
 {
     public Team Team;
-    public float HealthPoints = 100;
     public int MaxShootingsCount = 1;
     public GameObject BulletPrefab;
     public String Name;
@@ -42,12 +38,7 @@ public class Soldier : MonoBehaviour
     }
 
     // MARK: Private
-
-    private Boolean IsDead
-    {
-        get { return HealthPoints <= 0; }
-    }
-
+    
     private void Start()
     {
         _healthBarHelper = GetComponentInChildren<HealthBarHelper>();
@@ -66,29 +57,5 @@ public class Soldier : MonoBehaviour
         _healthBarHelper.CurrentHpPercentage = HealthPoints;
         _healthBarHelper.gameObject.SetActive(IsTeamActive);
         _soldierLight.gameObject.SetActive(IsTeamActive);
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        var otherGameObject = other.gameObject;
-        if (otherGameObject.CompareTag("Bullet"))
-        {
-            Destroy(otherGameObject);
-            HitByBullet(otherGameObject.GetComponent<Bullet>());
-        }
-    }
-
-    private void HitByBullet(Bullet bullet)
-    {
-        HealthPoints -= bullet.Damage;
-        DestroyIfDead();
-    }
-
-    private void DestroyIfDead()
-    {
-        if (IsDead)
-        {
-            Destroy(gameObject);
-        }
     }
 }

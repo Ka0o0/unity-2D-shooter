@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Game.Round.GameEventHandler
 {
@@ -31,20 +32,19 @@ namespace Game.Round.GameEventHandler
 
         public GameRoundState ShootEnemy(GameRoundEvent gameRoundEvent)
         {
-            if (gameRoundEvent.Type != GameRoundEventType.EnemySelected)
+            if (gameRoundEvent.Type != GameRoundEventType.FieldSelected)
             {
                 return GameRoundState.Idle;
             }
 
-            var enemySoldier = gameRoundEvent.Payload as Soldier;
             var soldier = _selectedSoldier;
 
-            if (!(enemySoldier && soldier))
+            if (!soldier)
             {
                 return GameRoundState.Idle;
             }
-            
-            soldier.ShootToPoint(enemySoldier.transform.position);
+
+            soldier.ShootToPoint((Vector2) gameRoundEvent.Payload);
 
             InitSoldierShootingMapFor(soldier);
             SoldierShootingCountMap[_selectedSoldier]++;

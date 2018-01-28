@@ -4,9 +4,7 @@
     {
         MovingModeStarted,
         ShootingModeStarted,
-        SoldierSelected,
-        EmptyFieldSelected,
-        FinishRound,
-        EnemySelected
+        FieldSelected,
+        FinishRound
     }
 }
