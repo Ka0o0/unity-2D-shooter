@@ -1529,7 +1529,7 @@ MonoBehaviour:
   GameFieldWidth: 10
   GameFieldHeight: 10
   PlayerStateMachine: {fileID: 1546219001}
-  Everysing:
+  AllSingsOnSeBattlefield:
   - {fileID: 347652514}
   - {fileID: 1048207800}
   - {fileID: 455475384}
