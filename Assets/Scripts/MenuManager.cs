@@ -17,7 +17,7 @@ public class MenuManager : MonoBehaviour
     {
         _isMainMenuShown = true;
     }
-    
+
     public void HideMainMenu()
     {
         _isMainMenuShown = false;
@@ -27,7 +27,15 @@ public class MenuManager : MonoBehaviour
     {
         var stateMachine = GameStateMachine.GetComponent<PlayerGameStateMachine>();
 
-        if (_isMainMenuShown)
+        if (stateMachine.GameRoundStateMachine.RoundState == GameRoundState.SoldierAttack ||
+            stateMachine.GameRoundStateMachine.RoundState == GameRoundState.SoldierMoving ||
+            stateMachine.GameRoundStateMachine.RoundState == GameRoundState.SoldierMovement)
+        {
+            PlayerIdleMenuCanvas.SetActive(false);
+            SoldierActionGameMenuCanvas.SetActive(false);
+            MainMenuCanvas.SetActive(false);
+        }
+        else if (_isMainMenuShown)
         {
             PlayerIdleMenuCanvas.SetActive(false);
             SoldierActionGameMenuCanvas.SetActive(false);
